@@ -25,6 +25,9 @@
       /* Gradasi Khusus Light Mode */
       --grad-start: rgba(255, 255, 255, 0.95);
       --grad-end: rgba(255, 255, 255, 0);
+      /* Warna Neon Button Light Mode */
+      --neon-bg: #ffffff;
+      --neon-text: var(--green-dark);
     }
 
     body[data-theme="dark"] {
@@ -41,6 +44,9 @@
       /* Gradasi Khusus Dark Mode */
       --grad-start: rgba(10, 20, 15, 0.95);
       --grad-end: rgba(10, 20, 15, 0);
+      /* Warna Neon Button Dark Mode */
+      --neon-bg: #060e0a;
+      --neon-text: #ffffff;
     }
 
     * {
@@ -260,8 +266,8 @@
       min-height: 62px;
       padding: 12px 20px;
       border-radius: 20px;
-      background: #060e0a; /* Warna gelap tegas */
-      color: #ffffff;
+      background: var(--neon-bg);
+      color: var(--neon-text);
       font-weight: 800;
       font-size: 14.5px;
       text-align: center;
@@ -278,7 +284,7 @@
       transform: translateY(-4px) scale(1.015);
       box-shadow: 0 0 24px rgba(8, 201, 109, 0.5), inset 0 0 12px rgba(8, 201, 109, 0.3);
       border-color: rgba(8, 201, 109, 1);
-      color: #ffffff;
+      color: var(--neon-text);
     }
 
     @keyframes neonPulse {
@@ -463,7 +469,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--green), var(--green-dark)); /* Warna selaras hijau neon */
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
       color: #ffffff;
       font-size: 10.5px;
       font-weight: 900;
@@ -484,7 +490,8 @@
       flex-direction: column;
       border-radius: var(--radius);
       overflow: hidden;
-      margin-bottom: 14px;
+      margin-top: 24px;
+      margin-bottom: 24px;
       border: 1px solid var(--line);
       box-shadow: 0 16px 50px rgba(8, 201, 109, 0.09);
       background: radial-gradient(circle at top, rgba(8, 201, 109, 0.15), transparent 60%), var(--card);
@@ -704,6 +711,33 @@
       margin-top: 10px;
     }
 
+    /* CSS KHUSUS TAB LAYER */
+    .layer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .layer-row:last-child {
+      border-bottom: none;
+    }
+    .layer-row input {
+      width: 70px;
+      min-height: 36px;
+      padding: 4px 8px;
+      text-align: center;
+      margin-left: 10px;
+    }
+    .layer-group-title {
+      font-size: 11px;
+      color: var(--green-dark);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 16px 0 8px;
+    }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
@@ -792,7 +826,7 @@
         <div>
           <h2>Admin Panel</h2>
           <p style="color:var(--muted); font-size:13px; margin-top:5px;">
-            Edit profil, tautan, kategori, dan produk dari sini.
+            Kelola profil, banner, tautan, kategori, dan produk.
           </p>
         </div>
         <button class="close-btn" onclick="closeAdmin()">×</button>
@@ -817,8 +851,10 @@
         <div class="tab-nav">
           <button type="button" class="tab-btn active" onclick="switchTab('tab-profile')">Profil</button>
           <button type="button" class="tab-btn" onclick="switchTab('tab-links')">Tautan</button>
+          <button type="button" class="tab-btn" onclick="switchTab('tab-banner')">Banner</button>
           <button type="button" class="tab-btn" onclick="switchTab('tab-category')">Kategori</button>
           <button type="button" class="tab-btn" onclick="switchTab('tab-product')">Produk</button>
+          <button type="button" class="tab-btn" onclick="switchTab('tab-layer')">Layer</button>
         </div>
 
         <!-- TAB PROFIL -->
@@ -846,6 +882,13 @@
           <div class="status" id="linkStatus"></div>
         </div>
 
+        <!-- TAB BANNER -->
+        <div id="tab-banner" class="tab-pane">
+          <div id="adminBanners"></div>
+          <button class="ghost-btn" style="width:100%;" onclick="addBanner()" type="button">+ Tambah Banner</button>
+          <div class="status" id="bannerStatus"></div>
+        </div>
+
         <!-- TAB KATEGORI -->
         <div id="tab-category" class="tab-pane">
           <div id="adminCategories"></div>
@@ -859,6 +902,36 @@
           <button class="ghost-btn" style="width:100%;" onclick="addProduct()" type="button">+ Tambah Produk</button>
           <div class="status" id="productStatus"></div>
         </div>
+
+        <!-- TAB LAYER (POSISI) -->
+        <div id="tab-layer" class="tab-pane">
+          <p style="font-size:12px; color:var(--muted); margin-bottom:15px; line-height:1.5;">
+            Ubah angka urutan di bawah ini untuk mengatur posisi. Semakin kecil angkanya (misal: 1), akan semakin di atas.
+          </p>
+
+          <div class="admin-card">
+            <h3 style="margin-bottom:10px; font-size:14px;">Urutan Tautan (Paling Atas)</h3>
+            <div id="layer-links"></div>
+          </div>
+
+          <div class="admin-card">
+            <h3 style="margin-bottom:10px; font-size:14px;">Urutan Banner</h3>
+            <div id="layer-banners"></div>
+          </div>
+
+          <div class="admin-card">
+            <h3 style="margin-bottom:10px; font-size:14px;">Urutan Kategori</h3>
+            <div id="layer-categories"></div>
+          </div>
+
+          <div class="admin-card">
+            <h3 style="margin-bottom:10px; font-size:14px;">Urutan Produk (Dalam Kategori)</h3>
+            <div id="layer-products"></div>
+          </div>
+
+          <button class="primary-btn" style="width:100%; margin-top:10px;" onclick="saveAllLayers()" type="button">Simpan Perubahan Posisi</button>
+          <div class="status" id="layerStatus"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -871,6 +944,7 @@
     if (isAdminMode) document.getElementById("adminTopBtn").style.display = "grid";
 
     let appData = { profile: {}, categories: [], products: [] };
+    let modifiedLayers = {}; // Untuk menyimpan perubahan urutan secara lokal sebelum disimpan
 
     // Set Tema
     const savedTheme = localStorage.getItem("theme") || "light";
@@ -974,29 +1048,29 @@
         html += `</div>`;
       }
 
-      // 3. RENDER KATEGORI & PRODUK
+      // 3. RENDER BANNERS GLOBAL
+      const banners = products.filter(p => p.type === "banner");
+      if (banners.length > 0) {
+        html += `<div class="banner-stack">`;
+        banners.forEach((product, i) => {
+          const imgHtml = `<img class="banner-img" src="${esc(product.image)}" alt="Banner">`;
+          if (product.link) {
+            html += `<a href="${esc(product.link)}" target="_blank" class="banner-item" style="animation-delay:${i * 0.04}s">${imgHtml}</a>`;
+          } else {
+            html += `<div class="banner-item" style="animation-delay:${i * 0.04}s">${imgHtml}</div>`;
+          }
+        });
+        html += `</div>`;
+      }
+
+      // 4. RENDER KATEGORI & PRODUK
       const categories = (appData.categories || []).filter(c => c.status === "active").sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
       categories.forEach(category => {
-        const catProducts = products.filter(p => p.categoryId === category.id && p.type !== "link");
+        const catProducts = products.filter(p => p.categoryId === category.id && p.type !== "link" && p.type !== "banner");
         if (!catProducts.length) return;
 
         html += `<section class="category-block"><p class="section-label">${esc(category.title)}</p><div class="product-list">`;
         
-        // Banner (Tipe Nyatu)
-        const banners = catProducts.filter(p => p.type === "banner");
-        if (banners.length) {
-          html += `<div class="banner-stack">`;
-          banners.forEach((product, i) => {
-            const imgHtml = `<img class="banner-img" src="${esc(product.image)}" alt="${esc(product.title)}">`;
-            if (product.link) {
-              html += `<a href="${esc(product.link)}" target="_blank" class="banner-item" style="animation-delay:${i * 0.04}s">${imgHtml}</a>`;
-            } else {
-              html += `<div class="banner-item" style="animation-delay:${i * 0.04}s">${imgHtml}</div>`;
-            }
-          });
-          html += `</div>`;
-        }
-
         // Tipe Baris (Row)
         catProducts.filter(p => p.type === "row").forEach((product, i) => {
           html += `<div class="product-row" style="animation-delay:${i * 0.04}s">
@@ -1074,8 +1148,10 @@
           renderPage(); 
           fillAdminProfile();
           renderAdminLinks();
+          renderAdminBanners();
           renderAdminCategories();
           renderAdminProducts();
+          renderAdminLayers(); // Refresh isi tab layer
         }
       } catch (e) { console.error("Error load admin", e); }
     }
@@ -1129,7 +1205,7 @@
             </div>
           </div>
           <div class="admin-actions">
-            <button class="ghost-btn" onclick="saveLink(this)">Simpan</button>
+            <button class="ghost-btn" onclick="saveItem(this, 'link', 'linkStatus')">Simpan</button>
             <button class="danger-btn" onclick="deleteItem(this, 'linkStatus')">Hapus</button>
           </div>
         </div>
@@ -1147,15 +1223,43 @@
       } catch(e) { st.textContent = e.message; }
     }
 
-    async function saveLink(btn) {
-      const box = btn.closest(".admin-card");
-      const payload = {};
-      box.querySelectorAll("[data-link-field]").forEach(i => payload[i.dataset.linkField] = i.value);
+    // ================== ADMIN BANNER ==================
+    function renderAdminBanners() {
+      const banners = (appData.products || []).filter(p => p.type === 'banner').sort((a,b) => Number(a.sort||0) - Number(b.sort||0));
+      document.getElementById("adminBanners").innerHTML = banners.map(ban => `
+        <div class="admin-card">
+          <input type="hidden" data-ban-field="id" value="${esc(ban.id)}">
+          <input type="hidden" data-ban-field="type" value="banner">
+          <input type="hidden" data-ban-field="categoryId" value="BANNER_SECTION">
+          <div class="field"><label>Judul Banner (Hanya u/ Admin)</label><input data-ban-field="title" value="${esc(ban.title)}"></div>
+          <div class="field"><label>Gambar URL</label><input data-ban-field="image" value="${esc(ban.image)}"></div>
+          <div class="field"><label>Link Tujuan Klik (Opsional)</label><input data-ban-field="link" value="${esc(ban.link)}"></div>
+          <div class="grid-2">
+            <div class="field"><label>Urutan Layer</label><input data-ban-field="sort" type="number" value="${esc(ban.sort)}"></div>
+            <div class="field"><label>Status</label>
+              <select data-ban-field="status">
+                <option value="active" ${ban.status === "active" ? "selected" : ""}>Tampil</option>
+                <option value="hidden" ${ban.status === "hidden" ? "selected" : ""}>Sembunyi</option>
+              </select>
+            </div>
+          </div>
+          <div class="admin-actions">
+            <button class="ghost-btn" onclick="saveItem(this, 'ban', 'bannerStatus')">Simpan</button>
+            <button class="danger-btn" onclick="deleteItem(this, 'bannerStatus')">Hapus</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function addBanner() {
+      const st = document.getElementById("bannerStatus");
+      st.textContent = "Menambah...";
       try {
-        const res = await api("saveProduct", payload);
-        document.getElementById("linkStatus").textContent = res.message;
+        const newSort = (appData.products.filter(p=>p.type==='banner').length) + 1;
+        await api("saveProduct", { id: "B" + Date.now(), categoryId: "BANNER_SECTION", title: "Banner Baru", description: "", image: "", link: "", buttonText: "", icon: "", type: "banner", status: "active", sort: newSort });
+        st.textContent = "Berhasil.";
         await refreshAdminData();
-      } catch(e) { document.getElementById("linkStatus").textContent = e.message; }
+      } catch(e) { st.textContent = e.message; }
     }
 
     // ================== ADMIN KATEGORI ==================
@@ -1215,7 +1319,7 @@
     // ================== ADMIN PRODUK ==================
     function renderAdminProducts() {
       const cats = appData.categories || [];
-      const products = (appData.products || []).filter(p => p.type !== 'link'); // Jangan tampilkan link di sini
+      const products = (appData.products || []).filter(p => p.type !== 'link' && p.type !== 'banner');
       document.getElementById("adminProducts").innerHTML = products.map(prod => `
         <div class="admin-card">
           <input type="hidden" data-prod-field="id" value="${esc(prod.id)}">
@@ -1238,7 +1342,6 @@
               <select data-prod-field="type">
                 <option value="row" ${prod.type === "row" ? "selected" : ""}>Baris (Row)</option>
                 <option value="square" ${prod.type === "square" ? "selected" : ""}>Kotak (Grid)</option>
-                <option value="banner" ${prod.type === "banner" ? "selected" : ""}>Banner (Nyatu)</option>
               </select>
             </div>
             <div class="field"><label>Status</label>
@@ -1249,7 +1352,7 @@
             </div>
           </div>
           <div class="admin-actions">
-            <button class="ghost-btn" onclick="saveProduct(this)">Simpan</button>
+            <button class="ghost-btn" onclick="saveItem(this, 'prod', 'productStatus')">Simpan</button>
             <button class="danger-btn" onclick="deleteItem(this, 'productStatus')">Hapus</button>
           </div>
         </div>
@@ -1267,18 +1370,19 @@
       } catch(e) { st.textContent = e.message; }
     }
 
-    async function saveProduct(btn) {
+    // Fungsi Simpan Umum u/ Tautan, Banner & Produk
+    async function saveItem(btn, dataPrefix, statusId) {
       const box = btn.closest(".admin-card");
       const payload = {};
-      box.querySelectorAll("[data-prod-field]").forEach(i => payload[i.dataset.prodField] = i.value);
+      box.querySelectorAll(`[data-${dataPrefix}-field]`).forEach(i => payload[i.dataset[`${dataPrefix}Field`]] = i.value);
       try {
         const res = await api("saveProduct", payload);
-        document.getElementById("productStatus").textContent = res.message;
+        document.getElementById(statusId).textContent = res.message;
         await refreshAdminData();
-      } catch(e) { document.getElementById("productStatus").textContent = e.message; }
+      } catch(e) { document.getElementById(statusId).textContent = e.message; }
     }
 
-    // Fungsi Hapus Gabungan untuk Tautan & Produk
+    // Fungsi Hapus Gabungan u/ Tautan, Banner & Produk
     async function deleteItem(btn, statusId) {
       if(!confirm("Hapus item ini?")) return;
       try {
@@ -1287,6 +1391,101 @@
         document.getElementById(statusId).textContent = res.message;
         await refreshAdminData();
       } catch(e) { document.getElementById(statusId).textContent = e.message; }
+    }
+
+    // ================== ADMIN LAYER (PENGATUR POSISI) ==================
+    function renderAdminLayers() {
+      modifiedLayers = {}; // Reset setiap kali render ulang
+
+      // 1. Tautan
+      const links = (appData.products || []).filter(p => p.type === 'link').sort((a,b) => Number(a.sort||0) - Number(b.sort||0));
+      let linkHtml = links.map(l => `
+        <div class="layer-row">
+          <span style="font-size:13px; font-weight:700;">${esc(l.title)}</span>
+          <input type="number" value="${esc(l.sort)}" onchange="markLayerChanged('${l.id}', this.value)">
+        </div>
+      `).join("");
+      document.getElementById("layer-links").innerHTML = linkHtml || "<div style='font-size:13px; color:var(--muted);'>Belum ada tautan</div>";
+
+      // 2. Banner
+      const banners = (appData.products || []).filter(p => p.type === 'banner').sort((a,b) => Number(a.sort||0) - Number(b.sort||0));
+      let banHtml = banners.map(b => `
+        <div class="layer-row">
+          <span style="font-size:13px; font-weight:700;">${esc(b.title || 'Banner tanpa judul')}</span>
+          <input type="number" value="${esc(b.sort)}" onchange="markLayerChanged('${b.id}', this.value)">
+        </div>
+      `).join("");
+      document.getElementById("layer-banners").innerHTML = banHtml || "<div style='font-size:13px; color:var(--muted);'>Belum ada banner</div>";
+
+      // 3. Kategori
+      const cats = (appData.categories || []).sort((a, b) => Number(a.sort || 0) - Number(b.sort || 0));
+      let catHtml = cats.map(c => `
+        <div class="layer-row">
+          <span style="font-size:13px; font-weight:700;">${esc(c.title)}</span>
+          <input type="number" value="${esc(c.sort)}" onchange="markLayerChanged('${c.id}', this.value)">
+        </div>
+      `).join("");
+      document.getElementById("layer-categories").innerHTML = catHtml || "<div style='font-size:13px; color:var(--muted);'>Belum ada kategori</div>";
+
+      // 4. Produk
+      let prodHtml = "";
+      cats.forEach(c => {
+        const prods = (appData.products || []).filter(p => p.categoryId === c.id && p.type !== 'link' && p.type !== 'banner').sort((a,b) => Number(a.sort||0) - Number(b.sort||0));
+        if(prods.length) {
+          prodHtml += `<div class="layer-group-title">KATEGORI: ${esc(c.title)}</div>`;
+          prodHtml += prods.map(p => `
+            <div class="layer-row">
+              <span style="font-size:13px;">${esc(p.title)}</span>
+              <input type="number" value="${esc(p.sort)}" onchange="markLayerChanged('${p.id}', this.value)">
+            </div>
+          `).join("");
+        }
+      });
+      document.getElementById("layer-products").innerHTML = prodHtml || "<div style='font-size:13px; color:var(--muted);'>Belum ada produk</div>";
+    }
+
+    function markLayerChanged(id, newSort) {
+      modifiedLayers[id] = newSort; // Tandai bahwa item ini diubah urutannya
+    }
+
+    async function saveAllLayers() {
+      const keys = Object.keys(modifiedLayers);
+      if(keys.length === 0) return alert("Belum ada angka posisi yang Anda ubah.");
+      
+      const st = document.getElementById("layerStatus");
+      st.textContent = `Menyimpan 0 dari ${keys.length} perubahan posisi...`;
+      
+      let successCount = 0;
+
+      for(let i=0; i<keys.length; i++) {
+        const id = keys[i];
+        const newSort = modifiedLayers[id];
+        
+        // Cari item di appData untuk mengambil sisa datanya (judul, link, dll)
+        let item = appData.categories.find(c => c.id === id);
+        let actionTarget = "saveCategory";
+        
+        if(!item) {
+          item = appData.products.find(p => p.id === id);
+          actionTarget = "saveProduct";
+        }
+
+        if(item) {
+          // Hanya update angka sort-nya, sisanya biarkan seperti semula
+          const payload = { ...item, sort: newSort };
+          try {
+            await api(actionTarget, payload);
+            successCount++;
+            st.textContent = `Menyimpan ${successCount} dari ${keys.length} perubahan posisi...`;
+          } catch(e) {
+            console.error("Gagal simpan urutan untuk", id, e);
+          }
+        }
+      }
+      
+      st.textContent = `Selesai! Berhasil menyimpan ${successCount} perubahan.`;
+      modifiedLayers = {}; // Bersihkan riwayat perubahan
+      await refreshAdminData(); // Refresh UI dan data
     }
 
     loadData();
