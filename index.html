@@ -244,6 +244,49 @@
       display: block;
     }
 
+    /* NEON LINK BUTTONS */
+    .link-section {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .neon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 62px;
+      padding: 12px 20px;
+      border-radius: 20px;
+      background: #060e0a; /* Warna gelap tegas */
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 14.5px;
+      text-align: center;
+      text-decoration: none;
+      border: 1px solid rgba(8, 201, 109, 0.6);
+      /* Efek cahaya neon */
+      box-shadow: 0 0 16px rgba(8, 201, 109, 0.25), inset 0 0 8px rgba(8, 201, 109, 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeUp 0.6s ease both, neonPulse 3s infinite alternate;
+      position: relative;
+    }
+
+    .neon-btn:hover {
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 0 24px rgba(8, 201, 109, 0.5), inset 0 0 12px rgba(8, 201, 109, 0.3);
+      border-color: rgba(8, 201, 109, 1);
+      color: #ffffff;
+    }
+
+    @keyframes neonPulse {
+      0% { box-shadow: 0 0 12px rgba(8, 201, 109, 0.2), inset 0 0 5px rgba(8, 201, 109, 0.1); }
+      50% { box-shadow: 0 0 22px rgba(8, 201, 109, 0.45), inset 0 0 10px rgba(8, 201, 109, 0.25); }
+      100% { box-shadow: 0 0 12px rgba(8, 201, 109, 0.2), inset 0 0 5px rgba(8, 201, 109, 0.1); }
+    }
+
     .category-block {
       margin-top: 24px;
     }
@@ -311,6 +354,7 @@
       overflow: hidden;
     }
 
+    /* TOMBOL BELI */
     .buy-pill {
       min-width: 65px;
       height: 32px;
@@ -323,6 +367,7 @@
       color: #ffffff;
       font-size: 11px;
       font-weight: 900;
+      text-transform: none; /* Mengikuti huruf ketikan admin */
       box-shadow: 0 14px 34px rgba(8, 201, 109, 0.23);
       white-space: nowrap;
       animation: wiggle 4s ease-in-out infinite;
@@ -379,7 +424,7 @@
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-      margin-top: -35px; /* Menarik teks ke atas overlap dengan gradasi */
+      margin-top: -35px;
       position: relative;
       z-index: 2;
     }
@@ -395,7 +440,7 @@
     }
 
     .square-title span {
-      color: #00b4d8; /* Warna teks modifikasi biru cyan */
+      color: #00b4d8;
     }
 
     .square-desc {
@@ -410,6 +455,7 @@
       overflow: hidden;
     }
 
+    /* TOMBOL BELI KOTAK */
     .square-btn {
       width: 100%;
       height: 32px;
@@ -417,19 +463,57 @@
       align-items: center;
       justify-content: center;
       border-radius: 999px;
-      background: #009688; /* Solid Teal Cyan sesuai gambar */
+      background: linear-gradient(135deg, var(--green), var(--green-dark)); /* Warna selaras hijau neon */
       color: #ffffff;
       font-size: 10.5px;
       font-weight: 900;
-      text-transform: uppercase;
-      box-shadow: 0 10px 25px rgba(0, 150, 136, 0.2);
+      text-transform: none; /* Mengikuti huruf ketikan admin */
+      box-shadow: 0 10px 25px rgba(8, 201, 109, 0.25);
       transition: transform 0.2s ease;
       text-decoration: none;
-      margin-top: auto; /* MENDORONG TOMBOL AGAR SELALU RATA BAWAH (SEJAJAR) */
+      margin-top: auto;
     }
 
     .square-btn:hover {
       transform: translateY(-2px) scale(1.02);
+    }
+
+    /* BANNER STACK (GAMBAR NYATU TANPA CELAH) */
+    .banner-stack {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 14px;
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 50px rgba(8, 201, 109, 0.09);
+      background: radial-gradient(circle at top, rgba(8, 201, 109, 0.15), transparent 60%), var(--card);
+      position: relative;
+    }
+
+    .banner-item {
+      width: 100%;
+      display: block;
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+      text-decoration: none;
+      animation: fadeUp 0.55s ease both;
+      transition: transform 0.2s ease;
+    }
+
+    .banner-item:hover {
+      transform: scale(1.01);
+      z-index: 2;
+    }
+
+    .banner-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      margin: 0;
+      border: none;
     }
 
     .empty-state {
@@ -658,8 +742,8 @@
         border-radius: 16px;
       }
 
-      .product-info h2 { font-size: 12.5px; } /* Diperkecil */
-      .product-info p { font-size: 10.5px; } /* Diperkecil */
+      .product-info h2 { font-size: 12.5px; } 
+      .product-info p { font-size: 10.5px; } 
 
       .buy-pill {
         min-width: 58px;
@@ -668,10 +752,10 @@
         font-size: 10px;
       }
 
-      .grid-2 { grid-template-columns: 1fr; } /* Hanya form yg satu baris di HP */
+      .grid-2 { grid-template-columns: 1fr; } 
       
       .mini-grid { 
-        grid-template-columns: 1fr 1fr; /* Tetap pertahankan 2 kolom di HP */
+        grid-template-columns: 1fr 1fr; 
         gap: 10px; 
       }
       
@@ -682,6 +766,8 @@
       .square-title { font-size: 11.5px; margin-bottom: 4px; }
       .square-desc { font-size: 9.5px; margin-bottom: 8px; }
       .square-btn { height: 30px; font-size: 10px; }
+      
+      .neon-btn { min-height: 54px; font-size: 13px; }
     }
   </style>
 </head>
@@ -697,7 +783,7 @@
   </div>
 
   <main class="wrap" id="app">
-    <div class="loading">Memuat Data...</div>
+    <div class="loading">Loading.. </div>
   </main>
 
   <div class="modal" id="adminModal">
@@ -706,7 +792,7 @@
         <div>
           <h2>Admin Panel</h2>
           <p style="color:var(--muted); font-size:13px; margin-top:5px;">
-            Edit profil, kategori, dan produk dari sini.
+            Edit profil, tautan, kategori, dan produk dari sini.
           </p>
         </div>
         <button class="close-btn" onclick="closeAdmin()">×</button>
@@ -730,10 +816,12 @@
       <div id="dashboard" style="display:none;">
         <div class="tab-nav">
           <button type="button" class="tab-btn active" onclick="switchTab('tab-profile')">Profil</button>
+          <button type="button" class="tab-btn" onclick="switchTab('tab-links')">Tautan</button>
           <button type="button" class="tab-btn" onclick="switchTab('tab-category')">Kategori</button>
           <button type="button" class="tab-btn" onclick="switchTab('tab-product')">Produk</button>
         </div>
 
+        <!-- TAB PROFIL -->
         <div id="tab-profile" class="tab-pane active">
           <div class="grid-2">
             <div class="field"><label>Nama</label><input id="editName"></div>
@@ -751,12 +839,21 @@
           <div class="status" id="profileStatus"></div>
         </div>
 
+        <!-- TAB TAUTAN (NEON BUTTON) -->
+        <div id="tab-links" class="tab-pane">
+          <div id="adminLinks"></div>
+          <button class="ghost-btn" style="width:100%;" onclick="addLink()" type="button">+ Tambah Tautan</button>
+          <div class="status" id="linkStatus"></div>
+        </div>
+
+        <!-- TAB KATEGORI -->
         <div id="tab-category" class="tab-pane">
           <div id="adminCategories"></div>
           <button class="ghost-btn" style="width:100%;" onclick="addCategory()" type="button">+ Tambah Kategori</button>
           <div class="status" id="categoryStatus"></div>
         </div>
 
+        <!-- TAB PRODUK -->
         <div id="tab-product" class="tab-pane">
           <div id="adminProducts"></div>
           <button class="ghost-btn" style="width:100%;" onclick="addProduct()" type="button">+ Tambah Produk</button>
@@ -803,13 +900,11 @@
       document.getElementById(tabId).classList.add('active');
     }
 
-    // FUNGSI API YANG SUDAH DIPERBARUI - OTOMATIS MENANGANI TOKEN
     async function api(action, params = {}) {
       if (!GAS_URL || GAS_URL === "PASTE_URL_WEB_APP_APPS_SCRIPT_DISINI") {
         throw new Error("URL GAS belum diatur di script HTML.");
       }
       
-      // Mengambil token langsung dari memori browser setiap kali request untuk menjamin tidak kosong
       const activeToken = sessionStorage.getItem("admin_token");
       if (activeToken) {
         params.token = activeToken;
@@ -823,7 +918,6 @@
         });
         const result = await response.json();
         
-        // Auto-logout jika Google Sheets menolak sesi
         if (!result.ok && result.message && result.message.includes("Sesi admin tidak valid")) {
           sessionStorage.removeItem("admin_token");
         }
@@ -849,8 +943,10 @@
 
     function renderPage() {
       const p = appData.profile || {};
+      const products = (appData.products || []).filter(p => p.status === "active").sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
       let html = "";
 
+      // 1. RENDER PROFIL
       if (p.name || p.description || p.photo || p.tagline) {
         html += `
           <section class="profile-card">
@@ -868,16 +964,41 @@
         `;
       }
 
-      const categories = (appData.categories || []).filter(c => c.status === "active").sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
-      const products = (appData.products || []).filter(p => p.status === "active").sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
+      // 2. RENDER TAUTAN (NEON BUTTONS)
+      const links = products.filter(p => p.type === "link");
+      if (links.length > 0) {
+        html += `<div class="link-section">`;
+        links.forEach((link, i) => {
+          html += `<a href="${esc(link.link)}" target="_blank" class="neon-btn" style="animation-delay:${i * 0.1}s">${esc(link.title)}</a>`;
+        });
+        html += `</div>`;
+      }
 
+      // 3. RENDER KATEGORI & PRODUK
+      const categories = (appData.categories || []).filter(c => c.status === "active").sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
       categories.forEach(category => {
-        const catProducts = products.filter(p => p.categoryId === category.id);
+        const catProducts = products.filter(p => p.categoryId === category.id && p.type !== "link");
         if (!catProducts.length) return;
 
         html += `<section class="category-block"><p class="section-label">${esc(category.title)}</p><div class="product-list">`;
         
-        catProducts.filter(p => p.type !== "square").forEach((product, i) => {
+        // Banner (Tipe Nyatu)
+        const banners = catProducts.filter(p => p.type === "banner");
+        if (banners.length) {
+          html += `<div class="banner-stack">`;
+          banners.forEach((product, i) => {
+            const imgHtml = `<img class="banner-img" src="${esc(product.image)}" alt="${esc(product.title)}">`;
+            if (product.link) {
+              html += `<a href="${esc(product.link)}" target="_blank" class="banner-item" style="animation-delay:${i * 0.04}s">${imgHtml}</a>`;
+            } else {
+              html += `<div class="banner-item" style="animation-delay:${i * 0.04}s">${imgHtml}</div>`;
+            }
+          });
+          html += `</div>`;
+        }
+
+        // Tipe Baris (Row)
+        catProducts.filter(p => p.type === "row").forEach((product, i) => {
           html += `<div class="product-row" style="animation-delay:${i * 0.04}s">
             <img class="thumb" src="${esc(product.image)}" alt="${esc(product.title)}">
             <div class="product-info"><h2>${esc(product.title)}</h2><p>${esc(product.description)}</p></div>
@@ -885,6 +1006,7 @@
           </div>`;
         });
 
+        // Tipe Kotak (Square)
         const squares = catProducts.filter(p => p.type === "square");
         if (squares.length) {
           html += `<div class="mini-grid">`;
@@ -897,12 +1019,13 @@
               <div class="square-content">
                 <h3 class="square-title">${esc(product.title).replace(/\[(.*?)\]/g, "<span>$1</span>")}</h3>
                 ${product.description ? `<p class="square-desc">${esc(product.description)}</p>` : ''}
-                <a class="square-btn" href="${esc(product.link)}" target="_blank">${esc(product.buttonText || "BELI SEKARANG")}</a>
+                <a class="square-btn" href="${esc(product.link)}" target="_blank">${esc(product.buttonText || "Beli Sekarang")}</a>
               </div>
             </div>`;
           });
           html += `</div>`;
         }
+        
         html += `</div></section>`;
       });
 
@@ -927,7 +1050,6 @@
         
         if (!res.ok) throw new Error(res.message || "Gagal login.");
         
-        // PENCEGAHAN ERROR: Cek jika token di Sheet hilang/kosong
         if (!res.token || res.token.trim() === "") {
           throw new Error("Terdapat error di Google Sheets: Baris 'token' tidak ditemukan/kosong. Pastikan ada baris dengan kunci 'token' (huruf kecil) di sheet Profile.");
         }
@@ -951,12 +1073,14 @@
           appData = res.data;
           renderPage(); 
           fillAdminProfile();
+          renderAdminLinks();
           renderAdminCategories();
           renderAdminProducts();
         }
       } catch (e) { console.error("Error load admin", e); }
     }
 
+    // ================== ADMIN PROFIL ==================
     function fillAdminProfile() {
       const p = appData.profile || {};
       ['Name', 'Tagline', 'Description', 'Photo', 'Instagram', 'Tiktok', 'Telegram', 'Email'].forEach(key => {
@@ -985,6 +1109,56 @@
       } catch (err) { st.textContent = err.message; }
     }
 
+    // ================== ADMIN TAUTAN (NEON BUTTON) ==================
+    function renderAdminLinks() {
+      const links = (appData.products || []).filter(p => p.type === 'link').sort((a,b) => Number(a.sort||0) - Number(b.sort||0));
+      document.getElementById("adminLinks").innerHTML = links.map(link => `
+        <div class="admin-card">
+          <input type="hidden" data-link-field="id" value="${esc(link.id)}">
+          <input type="hidden" data-link-field="type" value="link">
+          <input type="hidden" data-link-field="categoryId" value="LINK_SECTION">
+          <div class="field"><label>Teks Tautan</label><input data-link-field="title" value="${esc(link.title)}"></div>
+          <div class="field"><label>Link / URL Tujuan</label><input data-link-field="link" value="${esc(link.link)}"></div>
+          <div class="grid-2">
+            <div class="field"><label>Urutan Layer (Posisi)</label><input data-link-field="sort" type="number" value="${esc(link.sort)}"></div>
+            <div class="field"><label>Status</label>
+              <select data-link-field="status">
+                <option value="active" ${link.status === "active" ? "selected" : ""}>Tampil</option>
+                <option value="hidden" ${link.status === "hidden" ? "selected" : ""}>Sembunyi</option>
+              </select>
+            </div>
+          </div>
+          <div class="admin-actions">
+            <button class="ghost-btn" onclick="saveLink(this)">Simpan</button>
+            <button class="danger-btn" onclick="deleteItem(this, 'linkStatus')">Hapus</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function addLink() {
+      const st = document.getElementById("linkStatus");
+      st.textContent = "Menambah...";
+      try {
+        const newSort = (appData.products.filter(p=>p.type==='link').length) + 1;
+        await api("saveProduct", { id: "L" + Date.now(), categoryId: "LINK_SECTION", title: "Tautan Baru", description: "", image: "", link: "", buttonText: "", icon: "", type: "link", status: "active", sort: newSort });
+        st.textContent = "Berhasil.";
+        await refreshAdminData();
+      } catch(e) { st.textContent = e.message; }
+    }
+
+    async function saveLink(btn) {
+      const box = btn.closest(".admin-card");
+      const payload = {};
+      box.querySelectorAll("[data-link-field]").forEach(i => payload[i.dataset.linkField] = i.value);
+      try {
+        const res = await api("saveProduct", payload);
+        document.getElementById("linkStatus").textContent = res.message;
+        await refreshAdminData();
+      } catch(e) { document.getElementById("linkStatus").textContent = e.message; }
+    }
+
+    // ================== ADMIN KATEGORI ==================
     function renderAdminCategories() {
       document.getElementById("adminCategories").innerHTML = (appData.categories || []).map(cat => `
         <div class="admin-card">
@@ -1038,9 +1212,11 @@
       } catch(e) { document.getElementById("categoryStatus").textContent = e.message; }
     }
 
+    // ================== ADMIN PRODUK ==================
     function renderAdminProducts() {
       const cats = appData.categories || [];
-      document.getElementById("adminProducts").innerHTML = (appData.products || []).map(prod => `
+      const products = (appData.products || []).filter(p => p.type !== 'link'); // Jangan tampilkan link di sini
+      document.getElementById("adminProducts").innerHTML = products.map(prod => `
         <div class="admin-card">
           <input type="hidden" data-prod-field="id" value="${esc(prod.id)}">
           <div class="grid-2">
@@ -1050,18 +1226,19 @@
             <div class="field"><label>Urutan</label><input data-prod-field="sort" type="number" value="${esc(prod.sort)}"></div>
           </div>
           <div class="field"><label>Judul (Gunakan [teks] utk warna biru)</label><input data-prod-field="title" value="${esc(prod.title)}"></div>
-          <div class="field"><label>Deskripsi</label><textarea data-prod-field="description">${esc(prod.description)}</textarea></div>
+          <div class="field"><label>Deskripsi (Untuk Baris/Kotak)</label><textarea data-prod-field="description">${esc(prod.description)}</textarea></div>
           <div class="field"><label>Gambar URL</label><input data-prod-field="image" value="${esc(prod.image)}"></div>
-          <div class="field"><label>Link</label><input data-prod-field="link" value="${esc(prod.link)}"></div>
+          <div class="field"><label>Link (Tujuan Klik)</label><input data-prod-field="link" value="${esc(prod.link)}"></div>
           <div class="grid-2">
             <div class="field"><label>Tombol</label><input data-prod-field="buttonText" value="${esc(prod.buttonText || "Beli")}"></div>
             <div class="field"><label>Icon (Emoji)</label><input data-prod-field="icon" value="${esc(prod.icon || "✦")}"></div>
           </div>
           <div class="grid-2">
-            <div class="field"><label>Tipe</label>
+            <div class="field"><label>Tipe Tampilan</label>
               <select data-prod-field="type">
-                <option value="row" ${prod.type === "row" ? "selected" : ""}>Baris</option>
-                <option value="square" ${prod.type === "square" ? "selected" : ""}>Kotak</option>
+                <option value="row" ${prod.type === "row" ? "selected" : ""}>Baris (Row)</option>
+                <option value="square" ${prod.type === "square" ? "selected" : ""}>Kotak (Grid)</option>
+                <option value="banner" ${prod.type === "banner" ? "selected" : ""}>Banner (Nyatu)</option>
               </select>
             </div>
             <div class="field"><label>Status</label>
@@ -1073,7 +1250,7 @@
           </div>
           <div class="admin-actions">
             <button class="ghost-btn" onclick="saveProduct(this)">Simpan</button>
-            <button class="danger-btn" onclick="deleteProduct(this)">Hapus</button>
+            <button class="danger-btn" onclick="deleteItem(this, 'productStatus')">Hapus</button>
           </div>
         </div>
       `).join("");
@@ -1101,14 +1278,15 @@
       } catch(e) { document.getElementById("productStatus").textContent = e.message; }
     }
 
-    async function deleteProduct(btn) {
-      if(!confirm("Hapus produk ini?")) return;
+    // Fungsi Hapus Gabungan untuk Tautan & Produk
+    async function deleteItem(btn, statusId) {
+      if(!confirm("Hapus item ini?")) return;
       try {
-        const id = btn.closest(".admin-card").querySelector("[data-prod-field='id']").value;
-        const res = await api("deleteProduct", { id });
-        document.getElementById("productStatus").textContent = res.message;
+        const inputId = btn.closest(".admin-card").querySelector("input[type='hidden']").value;
+        const res = await api("deleteProduct", { id: inputId });
+        document.getElementById(statusId).textContent = res.message;
         await refreshAdminData();
-      } catch(e) { document.getElementById("productStatus").textContent = e.message; }
+      } catch(e) { document.getElementById(statusId).textContent = e.message; }
     }
 
     loadData();
