@@ -485,14 +485,43 @@
       gap: 12px;
     }
 
-    .admin-section {
-      border-top: 1px solid var(--line);
-      margin-top: 20px;
-      padding-top: 20px;
+    .tab-nav {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 20px;
+      overflow-x: auto;
     }
 
-    .admin-section h3 {
-      margin-bottom: 14px;
+    .tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-weight: 700;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      color: var(--green-dark);
+      border-bottom-color: var(--green-dark);
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .tab-pane.active {
+      display: block;
     }
 
     .admin-card {
@@ -663,9 +692,13 @@
       </form>
 
       <div id="dashboard" style="display:none;">
-        <div class="admin-section">
-          <h3>Edit Profil</h3>
+        <div class="tab-nav">
+          <button type="button" class="tab-btn active" onclick="switchTab('tab-profile')">Profil</button>
+          <button type="button" class="tab-btn" onclick="switchTab('tab-category')">Kategori</button>
+          <button type="button" class="tab-btn" onclick="switchTab('tab-product')">Produk</button>
+        </div>
 
+        <div id="tab-profile" class="tab-pane active">
           <div class="grid-2">
             <div class="field">
               <label>Nama</label>
@@ -714,15 +747,13 @@
           <div class="status" id="profileStatus"></div>
         </div>
 
-        <div class="admin-section">
-          <h3>Kelola Kategori</h3>
+        <div id="tab-category" class="tab-pane">
           <div id="adminCategories"></div>
           <button class="ghost-btn" style="width:100%;" onclick="addCategory()" type="button">+ Tambah Kategori</button>
           <div class="status" id="categoryStatus"></div>
         </div>
 
-        <div class="admin-section">
-          <h3>Kelola Produk</h3>
+        <div id="tab-product" class="tab-pane">
           <div id="adminProducts"></div>
           <button class="ghost-btn" style="width:100%;" onclick="addProduct()" type="button">+ Tambah Produk</button>
           <div class="status" id="productStatus"></div>
@@ -732,6 +763,7 @@
   </div>
 
   <script>
+    // PASTE URL DEPLOYMENT GOOGLE APPS SCRIPT DI SINI
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyXhmPkW1lzIPBF3OVJLBISbzH0J-VXHgrxHxTjW0m8zcXBO-iCBcSVRrzsSJT1QUhBEw/exec";
 
     const isAdminMode =
@@ -776,39 +808,39 @@
         .replaceAll("'", "&#039;");
     }
 
-    function api(action, params = {}) {
-      return new Promise((resolve, reject) => {
-        if (!GAS_URL || GAS_URL.includes("PASTE_GAS")) {
-          reject(new Error("GAS_URL belum diisi."));
-          return;
-        }
+    function switchTab(tabId) {
+      // Hapus status aktif dari semua tombol dan tab
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+      
+      // Tambahkan status aktif pada yang diklik
+      document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
 
-        const callbackName = "jsonp_" + Date.now() + "_" + Math.floor(Math.random() * 99999);
-        const script = document.createElement("script");
-
-        window[callbackName] = function(response) {
-          resolve(response);
-          delete window[callbackName];
-          script.remove();
-        };
-
-        const query = new URLSearchParams({
-          action,
-          callback: callbackName,
-          t: Date.now(),
-          ...params
+    // Fungsi fetch API yang diperbarui (lebih aman & menghindari limit JSONP)
+    async function api(action, params = {}) {
+      if (!GAS_URL || GAS_URL === "PASTE_URL_WEB_APP_APPS_SCRIPT_DISINI") {
+        throw new Error("GAS URL belum diatur di kode HTML.");
+      }
+      
+      try {
+        const response = await fetch(GAS_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8',
+          },
+          body: JSON.stringify({ action, ...params })
         });
-
-        script.src = GAS_URL + "?" + query.toString();
-
-        script.onerror = function() {
-          reject(new Error("Gagal terhubung ke GAS."));
-          delete window[callbackName];
-          script.remove();
-        };
-
-        document.body.appendChild(script);
-      });
+        
+        const result = await response.json();
+        if (!result.ok && result.message) {
+          throw new Error(result.message);
+        }
+        return result;
+      } catch (error) {
+        throw new Error(error.message || "Gagal terhubung ke database.");
+      }
     }
 
     async function loadData() {
@@ -827,7 +859,6 @@
 
     function renderPage() {
       const p = appData.profile || {};
-
       let html = "";
 
       if (p.name || p.description || p.photo || p.tagline) {
@@ -856,7 +887,7 @@
       html += renderContent();
 
       if (!html.trim()) {
-        html = `<div class="empty-state">Belum ada data.</div>`;
+        html = `<div class="empty-state">Belum ada data produk yang aktif.</div>`;
       }
 
       document.getElementById("app").innerHTML = html;
@@ -976,7 +1007,7 @@
       event.preventDefault();
 
       const status = document.getElementById("loginStatus");
-      status.textContent = "Login...";
+      status.textContent = "Loading login...";
 
       try {
         const response = await api("login", {
@@ -1002,13 +1033,17 @@
       document.getElementById("loginForm").style.display = "none";
       document.getElementById("dashboard").style.display = "block";
 
-      const response = await api("getData", {
-        admin: "1",
-        token: adminToken
-      });
+      try {
+        const response = await api("getData", {
+          admin: "1",
+          token: adminToken
+        });
 
-      if (response.ok) {
-        appData = response.data;
+        if (response.ok) {
+          appData = response.data;
+        }
+      } catch(e) {
+        console.error("Gagal load data admin", e);
       }
 
       fillAdminProfile();
@@ -1045,9 +1080,13 @@
         email: document.getElementById("editEmail").value
       };
 
-      const response = await api("saveProfile", payload);
-      status.textContent = response.message || "Profil disimpan.";
-      await refreshAdmin();
+      try {
+        const response = await api("saveProfile", payload);
+        status.textContent = response.message || "Profil disimpan.";
+        await refreshAdmin();
+      } catch (error) {
+        status.textContent = "Gagal menyimpan: " + error.message;
+      }
     }
 
     function renderAdminCategories() {
@@ -1090,16 +1129,19 @@
       const status = document.getElementById("categoryStatus");
       status.textContent = "Menambah kategori...";
 
-      await api("saveCategory", {
-        token: adminToken,
-        id: "C" + Date.now(),
-        title: "",
-        status: "active",
-        sort: (appData.categories || []).length + 1
-      });
-
-      status.textContent = "Kategori ditambahkan.";
-      await refreshAdmin();
+      try {
+        await api("saveCategory", {
+          token: adminToken,
+          id: "C" + Date.now(),
+          title: "",
+          status: "active",
+          sort: (appData.categories || []).length + 1
+        });
+        status.textContent = "Kategori ditambahkan.";
+        await refreshAdmin();
+      } catch(e) {
+        status.textContent = e.message;
+      }
     }
 
     async function saveCategory(button) {
@@ -1110,24 +1152,28 @@
         payload[input.dataset.catField] = input.value;
       });
 
-      const response = await api("saveCategory", payload);
-      document.getElementById("categoryStatus").textContent = response.message || "Kategori disimpan.";
-      await refreshAdmin();
+      try {
+        const response = await api("saveCategory", payload);
+        document.getElementById("categoryStatus").textContent = response.message || "Kategori disimpan.";
+        await refreshAdmin();
+      } catch (e) {
+        document.getElementById("categoryStatus").textContent = e.message;
+      }
     }
 
     async function deleteCategory(button) {
-      if (!confirm("Hapus kategori ini?")) return;
+      if (!confirm("Hapus kategori ini? Semua produk di dalamnya mungkin tidak akan tampil dengan benar.")) return;
 
       const box = button.closest(".admin-card");
       const id = box.querySelector("[data-cat-field='id']").value;
 
-      const response = await api("deleteCategory", {
-        token: adminToken,
-        id
-      });
-
-      document.getElementById("categoryStatus").textContent = response.message || "Kategori dihapus.";
-      await refreshAdmin();
+      try {
+        const response = await api("deleteCategory", { token: adminToken, id });
+        document.getElementById("categoryStatus").textContent = response.message || "Kategori dihapus.";
+        await refreshAdmin();
+      } catch(e) {
+        document.getElementById("categoryStatus").textContent = e.message;
+      }
     }
 
     function renderAdminProducts() {
@@ -1167,12 +1213,12 @@
             </div>
 
             <div class="field">
-              <label>Gambar URL</label>
+              <label>Gambar URL (Square/Kotak disarankan)</label>
               <input data-prod-field="image" value="${esc(product.image)}">
             </div>
 
             <div class="field">
-              <label>Link Lynk.id</label>
+              <label>Link Pembelian</label>
               <input data-prod-field="link" value="${esc(product.link)}">
             </div>
 
@@ -1183,7 +1229,7 @@
               </div>
 
               <div class="field">
-                <label>Icon Kotak</label>
+                <label>Icon Kotak (Emoji/Text)</label>
                 <input data-prod-field="icon" value="${esc(product.icon || "✦")}">
               </div>
             </div>
@@ -1192,8 +1238,8 @@
               <div class="field">
                 <label>Tipe Tampilan</label>
                 <select data-prod-field="type">
-                  <option value="row" ${product.type === "row" ? "selected" : ""}>Persegi Panjang</option>
-                  <option value="square" ${product.type === "square" ? "selected" : ""}>Kotak Persegi</option>
+                  <option value="row" ${product.type === "row" ? "selected" : ""}>Baris (Row)</option>
+                  <option value="square" ${product.type === "square" ? "selected" : ""}>Kotak (Grid)</option>
                 </select>
               </div>
 
@@ -1219,27 +1265,34 @@
       const firstCategory = (appData.categories || [])[0];
 
       if (!firstCategory) {
-        alert("Buat kategori dulu.");
+        alert("Buat kategori terlebih dahulu!");
         return;
       }
 
-      await api("saveProduct", {
-        token: adminToken,
-        id: "P" + Date.now(),
-        categoryId: firstCategory.id,
-        title: "",
-        description: "",
-        image: "",
-        link: "",
-        buttonText: "Beli",
-        icon: "✦",
-        type: "row",
-        status: "active",
-        sort: (appData.products || []).length + 1
-      });
+      const status = document.getElementById("productStatus");
+      status.textContent = "Menambah produk...";
 
-      document.getElementById("productStatus").textContent = "Produk ditambahkan.";
-      await refreshAdmin();
+      try {
+        await api("saveProduct", {
+          token: adminToken,
+          id: "P" + Date.now(),
+          categoryId: firstCategory.id,
+          title: "",
+          description: "",
+          image: "",
+          link: "",
+          buttonText: "Beli",
+          icon: "✦",
+          type: "row",
+          status: "active",
+          sort: (appData.products || []).length + 1
+        });
+
+        status.textContent = "Produk ditambahkan.";
+        await refreshAdmin();
+      } catch(e) {
+        status.textContent = e.message;
+      }
     }
 
     async function saveProduct(button) {
@@ -1250,9 +1303,13 @@
         payload[input.dataset.prodField] = input.value;
       });
 
-      const response = await api("saveProduct", payload);
-      document.getElementById("productStatus").textContent = response.message || "Produk disimpan.";
-      await refreshAdmin();
+      try {
+        const response = await api("saveProduct", payload);
+        document.getElementById("productStatus").textContent = response.message || "Produk disimpan.";
+        await refreshAdmin();
+      } catch(e) {
+        document.getElementById("productStatus").textContent = e.message;
+      }
     }
 
     async function deleteProduct(button) {
@@ -1261,23 +1318,27 @@
       const box = button.closest(".admin-card");
       const id = box.querySelector("[data-prod-field='id']").value;
 
-      const response = await api("deleteProduct", {
-        token: adminToken,
-        id
-      });
-
-      document.getElementById("productStatus").textContent = response.message || "Produk dihapus.";
-      await refreshAdmin();
+      try {
+        const response = await api("deleteProduct", { token: adminToken, id });
+        document.getElementById("productStatus").textContent = response.message || "Produk dihapus.";
+        await refreshAdmin();
+      } catch (e) {
+        document.getElementById("productStatus").textContent = e.message;
+      }
     }
 
     async function refreshAdmin() {
-      const response = await api("getData", {
-        admin: "1",
-        token: adminToken
-      });
+      try {
+        const response = await api("getData", {
+          admin: "1",
+          token: adminToken
+        });
 
-      if (response.ok) {
-        appData = response.data;
+        if (response.ok) {
+          appData = response.data;
+        }
+      } catch (e) {
+        console.error(e);
       }
 
       renderPage();
@@ -1288,11 +1349,12 @@
 
     loadData();
 
+    // Auto-refresh interval (Optional, keeps data fresh)
     setInterval(() => {
       if (!document.getElementById("adminModal").classList.contains("active")) {
         loadData();
       }
-    }, 20000);
+    }, 30000); // Changed to 30s to be safe with Google Apps Script limit
   </script>
 </body>
 </html>
