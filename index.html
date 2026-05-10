@@ -334,49 +334,95 @@
     }
 
     .square-card {
-      min-height: 170px;
-      padding: 15px;
       border-radius: var(--radius);
       border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at top, rgba(8, 201, 109, 0.15), transparent 42%),
-        var(--card);
+      background: var(--card);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       box-shadow: 0 16px 50px rgba(8, 201, 109, 0.08);
       animation: fadeUp 0.55s ease both;
+      position: relative;
     }
 
-    .square-icon {
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      border-radius: 16px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-      color: var(--green-dark);
-      font-size: 23px;
-      margin-bottom: 13px;
-    }
-
-    .square-card h3 {
-      font-size: 15.5px;
-      line-height: 1.25;
-      letter-spacing: -0.04em;
-      margin-bottom: 7px;
-    }
-
-    .square-card p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .square-card .buy-pill {
+    .square-img-wrap {
       width: 100%;
-      margin-top: 13px;
+      aspect-ratio: 1 / 1;
+      position: relative;
+      background: rgba(8, 201, 109, 0.1);
+    }
+
+    .square-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .square-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to top, var(--card) 5%, transparent 100%);
+    }
+
+    .square-content {
+      padding: 0 15px 15px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      margin-top: -30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .square-title {
+      font-size: 14px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      text-align: left;
+    }
+
+    .square-title span {
+      color: #00b4d8;
+    }
+
+    .square-desc {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+      text-align: left;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex-grow: 1;
+    }
+
+    .square-btn {
+      width: 100%;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #009688;
+      color: #ffffff;
+      font-size: 11.5px;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 10px 25px rgba(0, 150, 136, 0.2);
+      transition: transform 0.2s ease;
+      text-decoration: none;
+    }
+
+    .square-btn:hover {
+      transform: translateY(-2px) scale(1.02);
     }
 
     .empty-state {
@@ -822,8 +868,15 @@
           html += `<div class="mini-grid">`;
           squares.forEach((product, i) => {
             html += `<div class="square-card" style="animation-delay:${i * 0.04}s">
-              <div><div class="square-icon">${esc(product.icon || "✦")}</div><h3>${esc(product.title)}</h3><p>${esc(product.description)}</p></div>
-              <a class="buy-pill" href="${esc(product.link)}" target="_blank">${esc(product.buttonText || "Beli")}</a>
+              <div class="square-img-wrap">
+                <img class="square-img" src="${esc(product.image)}" alt="${esc(product.title)}">
+                <div class="square-overlay"></div>
+              </div>
+              <div class="square-content">
+                <h3 class="square-title">${esc(product.title).replace(/\[(.*?)\]/g, "<span>$1</span>")}</h3>
+                ${product.description ? `<p class="square-desc">${esc(product.description)}</p>` : ''}
+                <a class="square-btn" href="${esc(product.link)}" target="_blank">${esc(product.buttonText || "BELI SEKARANG")}</a>
+              </div>
             </div>`;
           });
           html += `</div>`;
@@ -974,7 +1027,7 @@
             </select></div>
             <div class="field"><label>Urutan</label><input data-prod-field="sort" type="number" value="${esc(prod.sort)}"></div>
           </div>
-          <div class="field"><label>Judul</label><input data-prod-field="title" value="${esc(prod.title)}"></div>
+          <div class="field"><label>Judul (Gunakan [teks] utk warna biru)</label><input data-prod-field="title" value="${esc(prod.title)}"></div>
           <div class="field"><label>Deskripsi</label><textarea data-prod-field="description">${esc(prod.description)}</textarea></div>
           <div class="field"><label>Gambar URL</label><input data-prod-field="image" value="${esc(prod.image)}"></div>
           <div class="field"><label>Link</label><input data-prod-field="link" value="${esc(prod.link)}"></div>
