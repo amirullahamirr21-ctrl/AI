@@ -1,0 +1,1298 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amir Qhan | Digital Product</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg1: #fbfffc;
+      --bg2: #f1fff6;
+      --text: #07130d;
+      --muted: #617069;
+      --card: rgba(255, 255, 255, 0.88);
+      --soft: #edf9f1;
+      --green: #08c96d;
+      --green-dark: #05a85b;
+      --line: rgba(8, 201, 109, 0.22);
+      --shadow: 0 20px 70px rgba(8, 201, 109, 0.14);
+      --radius: 24px;
+    }
+
+    body[data-theme="dark"] {
+      --bg1: #020403;
+      --bg2: #07120d;
+      --text: #f4fff8;
+      --muted: #a4b6ac;
+      --card: rgba(10, 20, 15, 0.86);
+      --soft: rgba(57, 255, 136, 0.08);
+      --green: #39ff88;
+      --green-dark: #00d978;
+      --line: rgba(57, 255, 136, 0.24);
+      --shadow: 0 20px 70px rgba(57, 255, 136, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(8, 201, 109, 0.18), transparent 30%),
+        radial-gradient(circle at 18% 18%, rgba(8, 201, 109, 0.10), transparent 26%),
+        linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 52%, var(--bg1) 100%);
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(8, 201, 109, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8, 201, 109, 0.05) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .top-actions {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 80;
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--card);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 12px 34px rgba(8, 201, 109, 0.10);
+    }
+
+    .icon-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    #adminTopBtn {
+      display: none;
+    }
+
+    .wrap {
+      width: min(520px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 34px 0 38px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .loading {
+      min-height: 52vh;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .profile-card {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 28px 22px 24px;
+      border-radius: 34px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top, rgba(8, 201, 109, 0.14), transparent 42%),
+        var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      animation: fadeUp 0.55s ease both;
+    }
+
+    .photo-ring {
+      width: 124px;
+      height: 124px;
+      margin: 0 auto 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      position: relative;
+      background: radial-gradient(circle, rgba(8, 201, 109, 0.28), transparent 68%);
+      box-shadow: 0 0 72px rgba(8, 201, 109, 0.20);
+    }
+
+    .photo-ring::before {
+      content: "";
+      position: absolute;
+      inset: -7px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      box-shadow: inset 0 0 24px rgba(8, 201, 109, 0.14);
+    }
+
+    .photo {
+      width: 106px;
+      height: 106px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(8, 201, 109, 0.62);
+      background: #eaf8ef;
+    }
+
+    .tagline {
+      width: fit-content;
+      margin: 0 auto 12px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--green-dark);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+    }
+
+    .name {
+      font-family: "Bricolage Grotesque", Inter, sans-serif;
+      font-size: clamp(34px, 8vw, 48px);
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      margin-bottom: 10px;
+    }
+
+    .name span {
+      color: var(--green);
+      text-shadow: 0 0 24px rgba(8, 201, 109, 0.22);
+    }
+
+    .desc {
+      max-width: 390px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.65;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .socials a {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      color: var(--text);
+      box-shadow: 0 12px 34px rgba(8, 201, 109, 0.08);
+      transition: 0.25s ease;
+    }
+
+    .socials a:hover {
+      transform: translateY(-3px);
+      color: var(--green-dark);
+      box-shadow: var(--shadow);
+    }
+
+    .socials svg {
+      width: 21px;
+      height: 21px;
+      fill: currentColor;
+      display: block;
+    }
+
+    .category-block {
+      margin-top: 24px;
+    }
+
+    .section-label {
+      margin: 4px 0 14px;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .product-list {
+      display: grid;
+      gap: 13px;
+    }
+
+    .product-row {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 88px;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 16% 50%, rgba(8, 201, 109, 0.11), transparent 36%),
+        var(--card);
+      box-shadow: 0 16px 50px rgba(8, 201, 109, 0.09);
+      backdrop-filter: blur(18px);
+      animation: fadeUp 0.55s ease both;
+    }
+
+    .thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      object-fit: cover;
+      background: #eefbf3;
+      border: 1px solid var(--line);
+    }
+
+    .product-info {
+      min-width: 0;
+    }
+
+    .product-info h2 {
+      font-size: 15px;
+      line-height: 1.22;
+      letter-spacing: -0.035em;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .product-info p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.38;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .buy-pill {
+      min-width: 70px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 13px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 900;
+      box-shadow: 0 14px 34px rgba(8, 201, 109, 0.23);
+      white-space: nowrap;
+      animation: wiggle 4s ease-in-out infinite;
+    }
+
+    .buy-pill:hover {
+      transform: translateY(-2px) scale(1.04);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+      margin-top: 13px;
+    }
+
+    .square-card {
+      min-height: 170px;
+      padding: 15px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top, rgba(8, 201, 109, 0.15), transparent 42%),
+        var(--card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 16px 50px rgba(8, 201, 109, 0.08);
+      animation: fadeUp 0.55s ease both;
+    }
+
+    .square-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--green-dark);
+      font-size: 23px;
+      margin-bottom: 13px;
+    }
+
+    .square-card h3 {
+      font-size: 15.5px;
+      line-height: 1.25;
+      letter-spacing: -0.04em;
+      margin-bottom: 7px;
+    }
+
+    .square-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .square-card .buy-pill {
+      width: 100%;
+      margin-top: 13px;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 30px 14px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal.active {
+      display: grid;
+    }
+
+    .admin-box {
+      width: min(860px, 100%);
+      max-height: 88vh;
+      overflow: auto;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background: var(--bg1);
+      color: var(--text);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.25);
+      padding: 22px;
+    }
+
+    body[data-theme="dark"] .admin-box {
+      background: #07120d;
+    }
+
+    .admin-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .admin-head h2 {
+      font-family: "Bricolage Grotesque", Inter, sans-serif;
+      font-size: 28px;
+      letter-spacing: -0.05em;
+    }
+
+    .close-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--text);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    option {
+      color: #07130d;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .admin-section {
+      border-top: 1px solid var(--line);
+      margin-top: 20px;
+      padding-top: 20px;
+    }
+
+    .admin-section h3 {
+      margin-bottom: 14px;
+    }
+
+    .admin-card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 20px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .admin-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .primary-btn,
+    .ghost-btn,
+    .danger-btn {
+      min-height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #fff;
+    }
+
+    .ghost-btn {
+      background: var(--card);
+      color: var(--text);
+    }
+
+    .danger-btn {
+      background: rgba(255, 66, 66, 0.12);
+      color: #ff6262;
+      border-color: rgba(255, 66, 66, 0.28);
+    }
+
+    .status {
+      min-height: 22px;
+      color: var(--green-dark);
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 10px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes wiggle {
+      0%, 88%, 100% {
+        transform: rotate(0deg) scale(1);
+      }
+      90% {
+        transform: rotate(-3deg) scale(1.04);
+      }
+      92% {
+        transform: rotate(3deg) scale(1.04);
+      }
+      94% {
+        transform: rotate(-2deg) scale(1.03);
+      }
+      96% {
+        transform: rotate(2deg) scale(1.03);
+      }
+    }
+
+    @media (max-width: 430px) {
+      .wrap {
+        width: min(100% - 20px, 520px);
+        padding-top: 24px;
+      }
+
+      .profile-card {
+        padding: 24px 18px 22px;
+        border-radius: 30px;
+      }
+
+      .product-row {
+        grid-template-columns: 56px minmax(0, 1fr) auto;
+        gap: 9px;
+        min-height: 80px;
+        padding: 10px;
+      }
+
+      .thumb {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+      }
+
+      .product-info h2 {
+        font-size: 13.2px;
+      }
+
+      .product-info p {
+        font-size: 11.3px;
+      }
+
+      .buy-pill {
+        min-width: 58px;
+        height: 33px;
+        padding: 0 10px;
+        font-size: 10.8px;
+      }
+
+      .mini-grid,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-actions">
+    <button class="icon-btn" onclick="toggleTheme()" aria-label="Ganti tema">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <button class="icon-btn" id="adminTopBtn" onclick="openAdmin()" aria-label="Login admin">
+      <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/></svg>
+    </button>
+  </div>
+
+  <main class="wrap" id="app">
+    <div class="loading">Loading...</div>
+  </main>
+
+  <div class="modal" id="adminModal">
+    <div class="admin-box">
+      <div class="admin-head">
+        <div>
+          <h2>Admin Panel</h2>
+          <p style="color:var(--muted); font-size:13px; margin-top:5px;">
+            Edit profil, kategori, dan produk dari sini.
+          </p>
+        </div>
+        <button class="close-btn" onclick="closeAdmin()">×</button>
+      </div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label>Username</label>
+          <input id="adminUsername" placeholder="admin" required>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input id="adminPassword" type="password" placeholder="1122" required>
+        </div>
+
+        <button class="primary-btn" style="width:100%;" type="submit">Login</button>
+        <div class="status" id="loginStatus"></div>
+      </form>
+
+      <div id="dashboard" style="display:none;">
+        <div class="admin-section">
+          <h3>Edit Profil</h3>
+
+          <div class="grid-2">
+            <div class="field">
+              <label>Nama</label>
+              <input id="editName">
+            </div>
+
+            <div class="field">
+              <label>Tagline kecil</label>
+              <input id="editTagline">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Deskripsi</label>
+            <textarea id="editDescription"></textarea>
+          </div>
+
+          <div class="field">
+            <label>Foto Profil URL</label>
+            <input id="editPhoto">
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label>Instagram</label>
+              <input id="editInstagram">
+            </div>
+
+            <div class="field">
+              <label>TikTok</label>
+              <input id="editTiktok">
+            </div>
+
+            <div class="field">
+              <label>Telegram</label>
+              <input id="editTelegram">
+            </div>
+
+            <div class="field">
+              <label>Email</label>
+              <input id="editEmail">
+            </div>
+          </div>
+
+          <button class="primary-btn" style="width:100%;" onclick="saveProfile()" type="button">Simpan Profil</button>
+          <div class="status" id="profileStatus"></div>
+        </div>
+
+        <div class="admin-section">
+          <h3>Kelola Kategori</h3>
+          <div id="adminCategories"></div>
+          <button class="ghost-btn" style="width:100%;" onclick="addCategory()" type="button">+ Tambah Kategori</button>
+          <div class="status" id="categoryStatus"></div>
+        </div>
+
+        <div class="admin-section">
+          <h3>Kelola Produk</h3>
+          <div id="adminProducts"></div>
+          <button class="ghost-btn" style="width:100%;" onclick="addProduct()" type="button">+ Tambah Produk</button>
+          <div class="status" id="productStatus"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyXhmPkW1lzIPBF3OVJLBISbzH0J-VXHgrxHxTjW0m8zcXBO-iCBcSVRrzsSJT1QUhBEw/exec";
+
+    const isAdminMode =
+      window.location.search.includes("admin=1") ||
+      window.location.hash.includes("admin");
+
+    if (isAdminMode) {
+      document.getElementById("adminTopBtn").style.display = "grid";
+    }
+
+    let adminToken = sessionStorage.getItem("admin_token") || "";
+
+    let appData = {
+      profile: {},
+      categories: [],
+      products: []
+    };
+
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.body.dataset.theme = savedTheme;
+    updateThemeIcon();
+
+    function toggleTheme() {
+      const current = document.body.dataset.theme || "light";
+      const next = current === "light" ? "dark" : "light";
+      document.body.dataset.theme = next;
+      localStorage.setItem("theme", next);
+      updateThemeIcon();
+    }
+
+    function updateThemeIcon() {
+      const theme = document.body.dataset.theme || "light";
+      document.getElementById("themeIcon").textContent = theme === "light" ? "🌙" : "☀️";
+    }
+
+    function esc(text) {
+      return String(text || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function api(action, params = {}) {
+      return new Promise((resolve, reject) => {
+        if (!GAS_URL || GAS_URL.includes("PASTE_GAS")) {
+          reject(new Error("GAS_URL belum diisi."));
+          return;
+        }
+
+        const callbackName = "jsonp_" + Date.now() + "_" + Math.floor(Math.random() * 99999);
+        const script = document.createElement("script");
+
+        window[callbackName] = function(response) {
+          resolve(response);
+          delete window[callbackName];
+          script.remove();
+        };
+
+        const query = new URLSearchParams({
+          action,
+          callback: callbackName,
+          t: Date.now(),
+          ...params
+        });
+
+        script.src = GAS_URL + "?" + query.toString();
+
+        script.onerror = function() {
+          reject(new Error("Gagal terhubung ke GAS."));
+          delete window[callbackName];
+          script.remove();
+        };
+
+        document.body.appendChild(script);
+      });
+    }
+
+    async function loadData() {
+      try {
+        const response = await api("getData");
+        if (response.ok) {
+          appData = response.data;
+        }
+      } catch (error) {
+        document.getElementById("app").innerHTML = `<div class="loading">${esc(error.message)}</div>`;
+        return;
+      }
+
+      renderPage();
+    }
+
+    function renderPage() {
+      const p = appData.profile || {};
+
+      let html = "";
+
+      if (p.name || p.description || p.photo || p.tagline) {
+        html += `
+          <section class="profile-card">
+            ${p.photo ? `
+              <div class="photo-ring">
+                <img class="photo" src="${esc(p.photo)}" alt="Foto Profil">
+              </div>
+            ` : ""}
+
+            ${p.tagline ? `<div class="tagline">${esc(p.tagline)}</div>` : ""}
+            ${p.name ? `<h1 class="name">${highlightAI(p.name)}</h1>` : ""}
+            ${p.description ? `<p class="desc">${esc(p.description)}</p>` : ""}
+
+            <div class="socials">
+              ${p.instagram ? socialInstagram(p.instagram) : ""}
+              ${p.tiktok ? socialTikTok(p.tiktok) : ""}
+              ${p.telegram ? socialTelegram(p.telegram) : ""}
+              ${p.email ? socialEmail(p.email) : ""}
+            </div>
+          </section>
+        `;
+      }
+
+      html += renderContent();
+
+      if (!html.trim()) {
+        html = `<div class="empty-state">Belum ada data.</div>`;
+      }
+
+      document.getElementById("app").innerHTML = html;
+    }
+
+    function highlightAI(name) {
+      return esc(name).replace(/AI$/i, "<span>AI</span>");
+    }
+
+    function socialInstagram(url) {
+      return `
+        <a href="${esc(url)}" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
+        </a>
+      `;
+    }
+
+    function socialTikTok(url) {
+      return `
+        <a href="${esc(url)}" target="_blank" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M16.6 5.82A5.66 5.66 0 0 0 20 7V10a8.7 8.7 0 0 1-3.4-.72v6.7A6.02 6.02 0 1 1 10.58 10c.36 0 .7.03 1.03.1v3.18a2.75 2.75 0 1 0 1.85 2.6V2h3.14v3.82Z"/></svg>
+        </a>
+      `;
+    }
+
+    function socialTelegram(url) {
+      return `
+        <a href="${esc(url)}" target="_blank" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M21.73 3.26a1.1 1.1 0 0 0-1.13-.18L3.2 9.8c-.78.3-.77 1.43.02 1.72l4.43 1.64 1.7 5.35c.23.74 1.17.96 1.7.4l2.45-2.56 4.54 3.34c.66.49 1.6.13 1.77-.68l2.28-14.68a1.1 1.1 0 0 0-.36-1.07ZM18.1 7.4l-7.7 6.82-.3 2.55-1.06-3.36 9.06-6.01Z"/></svg>
+        </a>
+      `;
+    }
+
+    function socialEmail(email) {
+      const href = email.includes("mailto:") ? email : "mailto:" + email;
+      return `
+        <a href="${esc(href)}" aria-label="Email">
+          <svg viewBox="0 0 24 24"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm8 8.15L4.7 7H4v.35l8 6.75 8-6.75V7h-.7L12 13.15Z"/></svg>
+        </a>
+      `;
+    }
+
+    function renderContent() {
+      const categories = (appData.categories || [])
+        .filter(c => c.status === "active")
+        .sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
+
+      const products = (appData.products || [])
+        .filter(p => p.status === "active")
+        .sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
+
+      let html = "";
+
+      categories.forEach(category => {
+        const categoryProducts = products.filter(p => p.categoryId === category.id);
+        if (!categoryProducts.length) return;
+
+        const rows = categoryProducts.filter(p => p.type !== "square");
+        const squares = categoryProducts.filter(p => p.type === "square");
+
+        html += `<section class="category-block">`;
+        html += `<p class="section-label">${esc(category.title)}</p>`;
+        html += `<div class="product-list">`;
+
+        rows.forEach((product, index) => {
+          html += `
+            <div class="product-row" style="animation-delay:${index * 0.04}s">
+              <img class="thumb" src="${esc(product.image)}" alt="${esc(product.title)}">
+              <div class="product-info">
+                <h2>${esc(product.title)}</h2>
+                <p>${esc(product.description)}</p>
+              </div>
+              <a class="buy-pill" href="${esc(product.link)}" target="_blank">
+                ${esc(product.buttonText || "Beli")}
+              </a>
+            </div>
+          `;
+        });
+
+        if (squares.length) {
+          html += `<div class="mini-grid">`;
+
+          squares.forEach((product, index) => {
+            html += `
+              <div class="square-card" style="animation-delay:${index * 0.04}s">
+                <div>
+                  <div class="square-icon">${esc(product.icon || "✦")}</div>
+                  <h3>${esc(product.title)}</h3>
+                  <p>${esc(product.description)}</p>
+                </div>
+                <a class="buy-pill" href="${esc(product.link)}" target="_blank">
+                  ${esc(product.buttonText || "Beli")}
+                </a>
+              </div>
+            `;
+          });
+
+          html += `</div>`;
+        }
+
+        html += `</div></section>`;
+      });
+
+      return html;
+    }
+
+    function openAdmin() {
+      document.getElementById("adminModal").classList.add("active");
+      if (adminToken) showDashboard();
+    }
+
+    function closeAdmin() {
+      document.getElementById("adminModal").classList.remove("active");
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const status = document.getElementById("loginStatus");
+      status.textContent = "Login...";
+
+      try {
+        const response = await api("login", {
+          username: document.getElementById("adminUsername").value,
+          password: document.getElementById("adminPassword").value
+        });
+
+        if (!response.ok) {
+          status.textContent = response.message || "Login gagal.";
+          return;
+        }
+
+        adminToken = response.token;
+        sessionStorage.setItem("admin_token", adminToken);
+        status.textContent = "Login berhasil.";
+        showDashboard();
+      } catch (error) {
+        status.textContent = error.message;
+      }
+    });
+
+    async function showDashboard() {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+
+      const response = await api("getData", {
+        admin: "1",
+        token: adminToken
+      });
+
+      if (response.ok) {
+        appData = response.data;
+      }
+
+      fillAdminProfile();
+      renderAdminCategories();
+      renderAdminProducts();
+    }
+
+    function fillAdminProfile() {
+      const p = appData.profile || {};
+
+      document.getElementById("editName").value = p.name || "";
+      document.getElementById("editTagline").value = p.tagline || "";
+      document.getElementById("editDescription").value = p.description || "";
+      document.getElementById("editPhoto").value = p.photo || "";
+      document.getElementById("editInstagram").value = p.instagram || "";
+      document.getElementById("editTiktok").value = p.tiktok || "";
+      document.getElementById("editTelegram").value = p.telegram || "";
+      document.getElementById("editEmail").value = p.email || "";
+    }
+
+    async function saveProfile() {
+      const status = document.getElementById("profileStatus");
+      status.textContent = "Menyimpan...";
+
+      const payload = {
+        token: adminToken,
+        name: document.getElementById("editName").value,
+        tagline: document.getElementById("editTagline").value,
+        description: document.getElementById("editDescription").value,
+        photo: document.getElementById("editPhoto").value,
+        instagram: document.getElementById("editInstagram").value,
+        tiktok: document.getElementById("editTiktok").value,
+        telegram: document.getElementById("editTelegram").value,
+        email: document.getElementById("editEmail").value
+      };
+
+      const response = await api("saveProfile", payload);
+      status.textContent = response.message || "Profil disimpan.";
+      await refreshAdmin();
+    }
+
+    function renderAdminCategories() {
+      const container = document.getElementById("adminCategories");
+      const categories = appData.categories || [];
+
+      container.innerHTML = categories.map(category => `
+        <div class="admin-card">
+          <input type="hidden" data-cat-field="id" value="${esc(category.id)}">
+
+          <div class="grid-2">
+            <div class="field">
+              <label>Nama Kategori</label>
+              <input data-cat-field="title" value="${esc(category.title)}">
+            </div>
+
+            <div class="field">
+              <label>Urutan</label>
+              <input data-cat-field="sort" type="number" value="${esc(category.sort)}">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Status</label>
+            <select data-cat-field="status">
+              <option value="active" ${category.status === "active" ? "selected" : ""}>Tampil</option>
+              <option value="hidden" ${category.status === "hidden" ? "selected" : ""}>Sembunyikan</option>
+            </select>
+          </div>
+
+          <div class="admin-actions">
+            <button class="ghost-btn" type="button" onclick="saveCategory(this)">Simpan</button>
+            <button class="danger-btn" type="button" onclick="deleteCategory(this)">Hapus</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function addCategory() {
+      const status = document.getElementById("categoryStatus");
+      status.textContent = "Menambah kategori...";
+
+      await api("saveCategory", {
+        token: adminToken,
+        id: "C" + Date.now(),
+        title: "",
+        status: "active",
+        sort: (appData.categories || []).length + 1
+      });
+
+      status.textContent = "Kategori ditambahkan.";
+      await refreshAdmin();
+    }
+
+    async function saveCategory(button) {
+      const box = button.closest(".admin-card");
+      const payload = { token: adminToken };
+
+      box.querySelectorAll("[data-cat-field]").forEach(input => {
+        payload[input.dataset.catField] = input.value;
+      });
+
+      const response = await api("saveCategory", payload);
+      document.getElementById("categoryStatus").textContent = response.message || "Kategori disimpan.";
+      await refreshAdmin();
+    }
+
+    async function deleteCategory(button) {
+      if (!confirm("Hapus kategori ini?")) return;
+
+      const box = button.closest(".admin-card");
+      const id = box.querySelector("[data-cat-field='id']").value;
+
+      const response = await api("deleteCategory", {
+        token: adminToken,
+        id
+      });
+
+      document.getElementById("categoryStatus").textContent = response.message || "Kategori dihapus.";
+      await refreshAdmin();
+    }
+
+    function renderAdminProducts() {
+      const container = document.getElementById("adminProducts");
+      const products = appData.products || [];
+      const categories = appData.categories || [];
+
+      container.innerHTML = products.map(product => {
+        const options = categories.map(c => `
+          <option value="${esc(c.id)}" ${product.categoryId === c.id ? "selected" : ""}>${esc(c.title || c.id)}</option>
+        `).join("");
+
+        return `
+          <div class="admin-card">
+            <input type="hidden" data-prod-field="id" value="${esc(product.id)}">
+
+            <div class="grid-2">
+              <div class="field">
+                <label>Kategori</label>
+                <select data-prod-field="categoryId">${options}</select>
+              </div>
+
+              <div class="field">
+                <label>Urutan</label>
+                <input data-prod-field="sort" type="number" value="${esc(product.sort)}">
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Judul Produk</label>
+              <input data-prod-field="title" value="${esc(product.title)}">
+            </div>
+
+            <div class="field">
+              <label>Deskripsi</label>
+              <textarea data-prod-field="description">${esc(product.description)}</textarea>
+            </div>
+
+            <div class="field">
+              <label>Gambar URL</label>
+              <input data-prod-field="image" value="${esc(product.image)}">
+            </div>
+
+            <div class="field">
+              <label>Link Lynk.id</label>
+              <input data-prod-field="link" value="${esc(product.link)}">
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label>Teks Tombol</label>
+                <input data-prod-field="buttonText" value="${esc(product.buttonText || "Beli")}">
+              </div>
+
+              <div class="field">
+                <label>Icon Kotak</label>
+                <input data-prod-field="icon" value="${esc(product.icon || "✦")}">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label>Tipe Tampilan</label>
+                <select data-prod-field="type">
+                  <option value="row" ${product.type === "row" ? "selected" : ""}>Persegi Panjang</option>
+                  <option value="square" ${product.type === "square" ? "selected" : ""}>Kotak Persegi</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label>Status</label>
+                <select data-prod-field="status">
+                  <option value="active" ${product.status === "active" ? "selected" : ""}>Tampil</option>
+                  <option value="hidden" ${product.status === "hidden" ? "selected" : ""}>Sembunyikan</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-actions">
+              <button class="ghost-btn" type="button" onclick="saveProduct(this)">Simpan</button>
+              <button class="danger-btn" type="button" onclick="deleteProduct(this)">Hapus</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function addProduct() {
+      const firstCategory = (appData.categories || [])[0];
+
+      if (!firstCategory) {
+        alert("Buat kategori dulu.");
+        return;
+      }
+
+      await api("saveProduct", {
+        token: adminToken,
+        id: "P" + Date.now(),
+        categoryId: firstCategory.id,
+        title: "",
+        description: "",
+        image: "",
+        link: "",
+        buttonText: "Beli",
+        icon: "✦",
+        type: "row",
+        status: "active",
+        sort: (appData.products || []).length + 1
+      });
+
+      document.getElementById("productStatus").textContent = "Produk ditambahkan.";
+      await refreshAdmin();
+    }
+
+    async function saveProduct(button) {
+      const box = button.closest(".admin-card");
+      const payload = { token: adminToken };
+
+      box.querySelectorAll("[data-prod-field]").forEach(input => {
+        payload[input.dataset.prodField] = input.value;
+      });
+
+      const response = await api("saveProduct", payload);
+      document.getElementById("productStatus").textContent = response.message || "Produk disimpan.";
+      await refreshAdmin();
+    }
+
+    async function deleteProduct(button) {
+      if (!confirm("Hapus produk ini?")) return;
+
+      const box = button.closest(".admin-card");
+      const id = box.querySelector("[data-prod-field='id']").value;
+
+      const response = await api("deleteProduct", {
+        token: adminToken,
+        id
+      });
+
+      document.getElementById("productStatus").textContent = response.message || "Produk dihapus.";
+      await refreshAdmin();
+    }
+
+    async function refreshAdmin() {
+      const response = await api("getData", {
+        admin: "1",
+        token: adminToken
+      });
+
+      if (response.ok) {
+        appData = response.data;
+      }
+
+      renderPage();
+      fillAdminProfile();
+      renderAdminCategories();
+      renderAdminProducts();
+    }
+
+    loadData();
+
+    setInterval(() => {
+      if (!document.getElementById("adminModal").classList.contains("active")) {
+        loadData();
+      }
+    }, 20000);
+  </script>
+</body>
+</html>
