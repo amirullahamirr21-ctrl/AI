@@ -774,7 +774,12 @@
       document.getElementById("adminTopBtn").style.display = "grid";
     }
 
+    // Mengambil tipe token untuk menghindari error Number vs String
     let adminToken = sessionStorage.getItem("admin_token") || "";
+    let tokenType = sessionStorage.getItem("admin_token_type") || "string";
+    if (tokenType === "number" && adminToken !== "") {
+      adminToken = Number(adminToken);
+    }
 
     let appData = {
       profile: {},
@@ -1020,8 +1025,11 @@
           return;
         }
 
+        // Simpan token beserta tipe datanya
         adminToken = response.token;
         sessionStorage.setItem("admin_token", adminToken);
+        sessionStorage.setItem("admin_token_type", typeof adminToken);
+        
         status.textContent = "Login berhasil.";
         showDashboard();
       } catch (error) {
