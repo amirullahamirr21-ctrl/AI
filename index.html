@@ -72,10 +72,7 @@
       text-decoration: none;
     }
 
-    button,
-    input,
-    textarea,
-    select {
+    button, input, textarea, select {
       font: inherit;
     }
 
@@ -457,9 +454,7 @@
       font-weight: 800;
     }
 
-    input,
-    textarea,
-    select {
+    input, textarea, select {
       width: 100%;
       min-height: 44px;
       padding: 10px 12px;
@@ -539,9 +534,7 @@
       margin-top: 10px;
     }
 
-    .primary-btn,
-    .ghost-btn,
-    .danger-btn {
+    .primary-btn, .ghost-btn, .danger-btn {
       min-height: 42px;
       border-radius: 999px;
       border: 1px solid var(--line);
@@ -574,32 +567,16 @@
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(14px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes wiggle {
-      0%, 88%, 100% {
-        transform: rotate(0deg) scale(1);
-      }
-      90% {
-        transform: rotate(-3deg) scale(1.04);
-      }
-      92% {
-        transform: rotate(3deg) scale(1.04);
-      }
-      94% {
-        transform: rotate(-2deg) scale(1.03);
-      }
-      96% {
-        transform: rotate(2deg) scale(1.03);
-      }
+      0%, 88%, 100% { transform: rotate(0deg) scale(1); }
+      90% { transform: rotate(-3deg) scale(1.04); }
+      92% { transform: rotate(3deg) scale(1.04); }
+      94% { transform: rotate(-2deg) scale(1.03); }
+      96% { transform: rotate(2deg) scale(1.03); }
     }
 
     @media (max-width: 430px) {
@@ -626,13 +603,8 @@
         border-radius: 16px;
       }
 
-      .product-info h2 {
-        font-size: 13.2px;
-      }
-
-      .product-info p {
-        font-size: 11.3px;
-      }
+      .product-info h2 { font-size: 13.2px; }
+      .product-info p { font-size: 11.3px; }
 
       .buy-pill {
         min-width: 58px;
@@ -641,10 +613,7 @@
         font-size: 10.8px;
       }
 
-      .mini-grid,
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
+      .mini-grid, .grid-2 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -654,14 +623,13 @@
     <button class="icon-btn" onclick="toggleTheme()" aria-label="Ganti tema">
       <span id="themeIcon">🌙</span>
     </button>
-
     <button class="icon-btn" id="adminTopBtn" onclick="openAdmin()" aria-label="Login admin">
       <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/></svg>
     </button>
   </div>
 
   <main class="wrap" id="app">
-    <div class="loading">Loading...</div>
+    <div class="loading">Memuat Data...</div>
   </main>
 
   <div class="modal" id="adminModal">
@@ -700,49 +668,17 @@
 
         <div id="tab-profile" class="tab-pane active">
           <div class="grid-2">
-            <div class="field">
-              <label>Nama</label>
-              <input id="editName">
-            </div>
-
-            <div class="field">
-              <label>Tagline kecil</label>
-              <input id="editTagline">
-            </div>
+            <div class="field"><label>Nama</label><input id="editName"></div>
+            <div class="field"><label>Tagline kecil</label><input id="editTagline"></div>
           </div>
-
-          <div class="field">
-            <label>Deskripsi</label>
-            <textarea id="editDescription"></textarea>
-          </div>
-
-          <div class="field">
-            <label>Foto Profil URL</label>
-            <input id="editPhoto">
-          </div>
-
+          <div class="field"><label>Deskripsi</label><textarea id="editDescription"></textarea></div>
+          <div class="field"><label>Foto Profil URL</label><input id="editPhoto"></div>
           <div class="grid-2">
-            <div class="field">
-              <label>Instagram</label>
-              <input id="editInstagram">
-            </div>
-
-            <div class="field">
-              <label>TikTok</label>
-              <input id="editTiktok">
-            </div>
-
-            <div class="field">
-              <label>Telegram</label>
-              <input id="editTelegram">
-            </div>
-
-            <div class="field">
-              <label>Email</label>
-              <input id="editEmail">
-            </div>
+            <div class="field"><label>Instagram</label><input id="editInstagram"></div>
+            <div class="field"><label>TikTok</label><input id="editTiktok"></div>
+            <div class="field"><label>Telegram</label><input id="editTelegram"></div>
+            <div class="field"><label>Email</label><input id="editEmail"></div>
           </div>
-
           <button class="primary-btn" style="width:100%;" onclick="saveProfile()" type="button">Simpan Profil</button>
           <div class="status" id="profileStatus"></div>
         </div>
@@ -763,88 +699,58 @@
   </div>
 
   <script>
-    // PASTE URL DEPLOYMENT GOOGLE APPS SCRIPT DI SINI
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyXhmPkW1lzIPBF3OVJLBISbzH0J-VXHgrxHxTjW0m8zcXBO-iCBcSVRrzsSJT1QUhBEw/exec";
+    // PASTE URL DEPLOYMENT GOOGLE APPS SCRIPT DI BAWAH INI
+    const GAS_URL = "PASTE_URL_WEB_APP_APPS_SCRIPT_DISINI";
 
-    const isAdminMode =
-      window.location.search.includes("admin=1") ||
-      window.location.hash.includes("admin");
+    const isAdminMode = window.location.search.includes("admin=1") || window.location.hash.includes("admin");
+    if (isAdminMode) document.getElementById("adminTopBtn").style.display = "grid";
 
-    if (isAdminMode) {
-      document.getElementById("adminTopBtn").style.display = "grid";
-    }
-
-    // Mengambil tipe token untuk menghindari error Number vs String
     let adminToken = sessionStorage.getItem("admin_token") || "";
-    let tokenType = sessionStorage.getItem("admin_token_type") || "string";
-    if (tokenType === "number" && adminToken !== "") {
-      adminToken = Number(adminToken);
-    }
+    let appData = { profile: {}, categories: [], products: [] };
 
-    let appData = {
-      profile: {},
-      categories: [],
-      products: []
-    };
-
+    // Set Tema
     const savedTheme = localStorage.getItem("theme") || "light";
     document.body.dataset.theme = savedTheme;
     updateThemeIcon();
 
     function toggleTheme() {
-      const current = document.body.dataset.theme || "light";
-      const next = current === "light" ? "dark" : "light";
+      const next = (document.body.dataset.theme || "light") === "light" ? "dark" : "light";
       document.body.dataset.theme = next;
       localStorage.setItem("theme", next);
       updateThemeIcon();
     }
-
     function updateThemeIcon() {
-      const theme = document.body.dataset.theme || "light";
-      document.getElementById("themeIcon").textContent = theme === "light" ? "🌙" : "☀️";
+      document.getElementById("themeIcon").textContent = (document.body.dataset.theme || "light") === "light" ? "🌙" : "☀️";
     }
 
     function esc(text) {
-      return String(text || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+      return String(text || "").replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+      });
     }
 
     function switchTab(tabId) {
-      // Hapus status aktif dari semua tombol dan tab
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-      
-      // Tambahkan status aktif pada yang diklik
       document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active');
       document.getElementById(tabId).classList.add('active');
     }
 
-    // Fungsi fetch API yang diperbarui (lebih aman & menghindari limit JSONP)
     async function api(action, params = {}) {
       if (!GAS_URL || GAS_URL === "PASTE_URL_WEB_APP_APPS_SCRIPT_DISINI") {
-        throw new Error("GAS URL belum diatur di kode HTML.");
+        throw new Error("URL GAS belum diatur di script HTML.");
       }
-      
       try {
         const response = await fetch(GAS_URL, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8',
-          },
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({ action, ...params })
         });
-        
         const result = await response.json();
-        if (!result.ok && result.message) {
-          throw new Error(result.message);
-        }
+        if (!result.ok && result.message) throw new Error(result.message);
         return result;
       } catch (error) {
-        throw new Error(error.message || "Gagal terhubung ke database.");
+        throw new Error(error.message || "Gagal terhubung ke server.");
       }
     }
 
@@ -853,13 +759,11 @@
         const response = await api("getData");
         if (response.ok) {
           appData = response.data;
+          renderPage();
         }
       } catch (error) {
         document.getElementById("app").innerHTML = `<div class="loading">${esc(error.message)}</div>`;
-        return;
       }
-
-      renderPage();
     }
 
     function renderPage() {
@@ -869,500 +773,254 @@
       if (p.name || p.description || p.photo || p.tagline) {
         html += `
           <section class="profile-card">
-            ${p.photo ? `
-              <div class="photo-ring">
-                <img class="photo" src="${esc(p.photo)}" alt="Foto Profil">
-              </div>
-            ` : ""}
-
+            ${p.photo ? `<div class="photo-ring"><img class="photo" src="${esc(p.photo)}" alt="Profil"></div>` : ""}
             ${p.tagline ? `<div class="tagline">${esc(p.tagline)}</div>` : ""}
-            ${p.name ? `<h1 class="name">${highlightAI(p.name)}</h1>` : ""}
+            ${p.name ? `<h1 class="name">${esc(p.name).replace(/AI$/i, "<span>AI</span>")}</h1>` : ""}
             ${p.description ? `<p class="desc">${esc(p.description)}</p>` : ""}
-
             <div class="socials">
-              ${p.instagram ? socialInstagram(p.instagram) : ""}
-              ${p.tiktok ? socialTikTok(p.tiktok) : ""}
-              ${p.telegram ? socialTelegram(p.telegram) : ""}
-              ${p.email ? socialEmail(p.email) : ""}
+              ${p.instagram ? `<a href="${esc(p.instagram)}" target="_blank"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></a>` : ""}
+              ${p.tiktok ? `<a href="${esc(p.tiktok)}" target="_blank"><svg viewBox="0 0 24 24"><path d="M16.6 5.82A5.66 5.66 0 0 0 20 7V10a8.7 8.7 0 0 1-3.4-.72v6.7A6.02 6.02 0 1 1 10.58 10c.36 0 .7.03 1.03.1v3.18a2.75 2.75 0 1 0 1.85 2.6V2h3.14v3.82Z"/></svg></a>` : ""}
+              ${p.telegram ? `<a href="${esc(p.telegram)}" target="_blank"><svg viewBox="0 0 24 24"><path d="M21.73 3.26a1.1 1.1 0 0 0-1.13-.18L3.2 9.8c-.78.3-.77 1.43.02 1.72l4.43 1.64 1.7 5.35c.23.74 1.17.96 1.7.4l2.45-2.56 4.54 3.34c.66.49 1.6.13 1.77-.68l2.28-14.68a1.1 1.1 0 0 0-.36-1.07ZM18.1 7.4l-7.7 6.82-.3 2.55-1.06-3.36 9.06-6.01Z"/></svg></a>` : ""}
+              ${p.email ? `<a href="${p.email.includes("mailto:") ? esc(p.email) : "mailto:" + esc(p.email)}"><svg viewBox="0 0 24 24"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm8 8.15L4.7 7H4v.35l8 6.75 8-6.75V7h-.7L12 13.15Z"/></svg></a>` : ""}
             </div>
           </section>
         `;
       }
 
-      html += renderContent();
-
-      if (!html.trim()) {
-        html = `<div class="empty-state">Belum ada data produk yang aktif.</div>`;
-      }
-
-      document.getElementById("app").innerHTML = html;
-    }
-
-    function highlightAI(name) {
-      return esc(name).replace(/AI$/i, "<span>AI</span>");
-    }
-
-    function socialInstagram(url) {
-      return `
-        <a href="${esc(url)}" target="_blank" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
-        </a>
-      `;
-    }
-
-    function socialTikTok(url) {
-      return `
-        <a href="${esc(url)}" target="_blank" aria-label="TikTok">
-          <svg viewBox="0 0 24 24"><path d="M16.6 5.82A5.66 5.66 0 0 0 20 7V10a8.7 8.7 0 0 1-3.4-.72v6.7A6.02 6.02 0 1 1 10.58 10c.36 0 .7.03 1.03.1v3.18a2.75 2.75 0 1 0 1.85 2.6V2h3.14v3.82Z"/></svg>
-        </a>
-      `;
-    }
-
-    function socialTelegram(url) {
-      return `
-        <a href="${esc(url)}" target="_blank" aria-label="Telegram">
-          <svg viewBox="0 0 24 24"><path d="M21.73 3.26a1.1 1.1 0 0 0-1.13-.18L3.2 9.8c-.78.3-.77 1.43.02 1.72l4.43 1.64 1.7 5.35c.23.74 1.17.96 1.7.4l2.45-2.56 4.54 3.34c.66.49 1.6.13 1.77-.68l2.28-14.68a1.1 1.1 0 0 0-.36-1.07ZM18.1 7.4l-7.7 6.82-.3 2.55-1.06-3.36 9.06-6.01Z"/></svg>
-        </a>
-      `;
-    }
-
-    function socialEmail(email) {
-      const href = email.includes("mailto:") ? email : "mailto:" + email;
-      return `
-        <a href="${esc(href)}" aria-label="Email">
-          <svg viewBox="0 0 24 24"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm8 8.15L4.7 7H4v.35l8 6.75 8-6.75V7h-.7L12 13.15Z"/></svg>
-        </a>
-      `;
-    }
-
-    function renderContent() {
-      const categories = (appData.categories || [])
-        .filter(c => c.status === "active")
-        .sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
-
-      const products = (appData.products || [])
-        .filter(p => p.status === "active")
-        .sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
-
-      let html = "";
+      const categories = (appData.categories || []).filter(c => c.status === "active").sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
+      const products = (appData.products || []).filter(p => p.status === "active").sort((a, b) => Number(a.sort || 999) - Number(b.sort || 999));
 
       categories.forEach(category => {
-        const categoryProducts = products.filter(p => p.categoryId === category.id);
-        if (!categoryProducts.length) return;
+        const catProducts = products.filter(p => p.categoryId === category.id);
+        if (!catProducts.length) return;
 
-        const rows = categoryProducts.filter(p => p.type !== "square");
-        const squares = categoryProducts.filter(p => p.type === "square");
-
-        html += `<section class="category-block">`;
-        html += `<p class="section-label">${esc(category.title)}</p>`;
-        html += `<div class="product-list">`;
-
-        rows.forEach((product, index) => {
-          html += `
-            <div class="product-row" style="animation-delay:${index * 0.04}s">
-              <img class="thumb" src="${esc(product.image)}" alt="${esc(product.title)}">
-              <div class="product-info">
-                <h2>${esc(product.title)}</h2>
-                <p>${esc(product.description)}</p>
-              </div>
-              <a class="buy-pill" href="${esc(product.link)}" target="_blank">
-                ${esc(product.buttonText || "Beli")}
-              </a>
-            </div>
-          `;
+        html += `<section class="category-block"><p class="section-label">${esc(category.title)}</p><div class="product-list">`;
+        
+        catProducts.filter(p => p.type !== "square").forEach((product, i) => {
+          html += `<div class="product-row" style="animation-delay:${i * 0.04}s">
+            <img class="thumb" src="${esc(product.image)}" alt="${esc(product.title)}">
+            <div class="product-info"><h2>${esc(product.title)}</h2><p>${esc(product.description)}</p></div>
+            <a class="buy-pill" href="${esc(product.link)}" target="_blank">${esc(product.buttonText || "Beli")}</a>
+          </div>`;
         });
 
+        const squares = catProducts.filter(p => p.type === "square");
         if (squares.length) {
           html += `<div class="mini-grid">`;
-
-          squares.forEach((product, index) => {
-            html += `
-              <div class="square-card" style="animation-delay:${index * 0.04}s">
-                <div>
-                  <div class="square-icon">${esc(product.icon || "✦")}</div>
-                  <h3>${esc(product.title)}</h3>
-                  <p>${esc(product.description)}</p>
-                </div>
-                <a class="buy-pill" href="${esc(product.link)}" target="_blank">
-                  ${esc(product.buttonText || "Beli")}
-                </a>
-              </div>
-            `;
+          squares.forEach((product, i) => {
+            html += `<div class="square-card" style="animation-delay:${i * 0.04}s">
+              <div><div class="square-icon">${esc(product.icon || "✦")}</div><h3>${esc(product.title)}</h3><p>${esc(product.description)}</p></div>
+              <a class="buy-pill" href="${esc(product.link)}" target="_blank">${esc(product.buttonText || "Beli")}</a>
+            </div>`;
           });
-
           html += `</div>`;
         }
-
         html += `</div></section>`;
       });
 
-      return html;
+      document.getElementById("app").innerHTML = html || `<div class="empty-state">Belum ada data produk.</div>`;
     }
 
     function openAdmin() {
       document.getElementById("adminModal").classList.add("active");
       if (adminToken) showDashboard();
     }
+    function closeAdmin() { document.getElementById("adminModal").classList.remove("active"); }
 
-    function closeAdmin() {
-      document.getElementById("adminModal").classList.remove("active");
-    }
-
-    document.getElementById("loginForm").addEventListener("submit", async function(event) {
-      event.preventDefault();
-
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
       const status = document.getElementById("loginStatus");
-      status.textContent = "Loading login...";
-
+      status.textContent = "Verifikasi login...";
       try {
-        const response = await api("login", {
+        const res = await api("login", {
           username: document.getElementById("adminUsername").value,
           password: document.getElementById("adminPassword").value
         });
-
-        if (!response.ok) {
-          status.textContent = response.message || "Login gagal.";
-          return;
-        }
-
-        // Simpan token beserta tipe datanya
-        adminToken = response.token;
+        if (!res.ok) throw new Error(res.message || "Gagal login.");
+        adminToken = res.token;
         sessionStorage.setItem("admin_token", adminToken);
-        sessionStorage.setItem("admin_token_type", typeof adminToken);
-        
-        status.textContent = "Login berhasil.";
+        status.textContent = "Berhasil login.";
         showDashboard();
-      } catch (error) {
-        status.textContent = error.message;
-      }
+      } catch (err) { status.textContent = err.message; }
     });
 
     async function showDashboard() {
       document.getElementById("loginForm").style.display = "none";
       document.getElementById("dashboard").style.display = "block";
+      await refreshAdminData();
+    }
 
+    async function refreshAdminData() {
       try {
-        const response = await api("getData", {
-          admin: "1",
-          token: adminToken
-        });
-
-        if (response.ok) {
-          appData = response.data;
+        const res = await api("getData", { token: adminToken });
+        if (res.ok) {
+          appData = res.data;
+          renderPage(); // Update main UI automatically after loading latest data
+          fillAdminProfile();
+          renderAdminCategories();
+          renderAdminProducts();
         }
-      } catch(e) {
-        console.error("Gagal load data admin", e);
-      }
-
-      fillAdminProfile();
-      renderAdminCategories();
-      renderAdminProducts();
+      } catch (e) { console.error("Error load admin", e); }
     }
 
     function fillAdminProfile() {
       const p = appData.profile || {};
-
-      document.getElementById("editName").value = p.name || "";
-      document.getElementById("editTagline").value = p.tagline || "";
-      document.getElementById("editDescription").value = p.description || "";
-      document.getElementById("editPhoto").value = p.photo || "";
-      document.getElementById("editInstagram").value = p.instagram || "";
-      document.getElementById("editTiktok").value = p.tiktok || "";
-      document.getElementById("editTelegram").value = p.telegram || "";
-      document.getElementById("editEmail").value = p.email || "";
+      ['Name', 'Tagline', 'Description', 'Photo', 'Instagram', 'Tiktok', 'Telegram', 'Email'].forEach(key => {
+        if(document.getElementById(`edit${key}`)) {
+          document.getElementById(`edit${key}`).value = p[key.toLowerCase()] || "";
+        }
+      });
     }
 
     async function saveProfile() {
-      const status = document.getElementById("profileStatus");
-      status.textContent = "Menyimpan...";
-
-      const payload = {
-        token: adminToken,
-        name: document.getElementById("editName").value,
-        tagline: document.getElementById("editTagline").value,
-        description: document.getElementById("editDescription").value,
-        photo: document.getElementById("editPhoto").value,
-        instagram: document.getElementById("editInstagram").value,
-        tiktok: document.getElementById("editTiktok").value,
-        telegram: document.getElementById("editTelegram").value,
-        email: document.getElementById("editEmail").value
-      };
-
+      const st = document.getElementById("profileStatus");
+      st.textContent = "Menyimpan...";
       try {
-        const response = await api("saveProfile", payload);
-        status.textContent = response.message || "Profil disimpan.";
-        await refreshAdmin();
-      } catch (error) {
-        status.textContent = "Gagal menyimpan: " + error.message;
-      }
+        const res = await api("saveProfile", {
+          token: adminToken,
+          name: document.getElementById("editName").value,
+          tagline: document.getElementById("editTagline").value,
+          description: document.getElementById("editDescription").value,
+          photo: document.getElementById("editPhoto").value,
+          instagram: document.getElementById("editInstagram").value,
+          tiktok: document.getElementById("editTiktok").value,
+          telegram: document.getElementById("editTelegram").value,
+          email: document.getElementById("editEmail").value
+        });
+        st.textContent = res.message || "Tersimpan.";
+        await refreshAdminData();
+      } catch (err) { st.textContent = err.message; }
     }
 
     function renderAdminCategories() {
-      const container = document.getElementById("adminCategories");
-      const categories = appData.categories || [];
-
-      container.innerHTML = categories.map(category => `
+      document.getElementById("adminCategories").innerHTML = (appData.categories || []).map(cat => `
         <div class="admin-card">
-          <input type="hidden" data-cat-field="id" value="${esc(category.id)}">
-
+          <input type="hidden" data-cat-field="id" value="${esc(cat.id)}">
           <div class="grid-2">
-            <div class="field">
-              <label>Nama Kategori</label>
-              <input data-cat-field="title" value="${esc(category.title)}">
-            </div>
-
-            <div class="field">
-              <label>Urutan</label>
-              <input data-cat-field="sort" type="number" value="${esc(category.sort)}">
-            </div>
+            <div class="field"><label>Kategori</label><input data-cat-field="title" value="${esc(cat.title)}"></div>
+            <div class="field"><label>Urutan</label><input data-cat-field="sort" type="number" value="${esc(cat.sort)}"></div>
           </div>
-
-          <div class="field">
-            <label>Status</label>
+          <div class="field"><label>Status</label>
             <select data-cat-field="status">
-              <option value="active" ${category.status === "active" ? "selected" : ""}>Tampil</option>
-              <option value="hidden" ${category.status === "hidden" ? "selected" : ""}>Sembunyikan</option>
+              <option value="active" ${cat.status === "active" ? "selected" : ""}>Tampil</option>
+              <option value="hidden" ${cat.status === "hidden" ? "selected" : ""}>Sembunyi</option>
             </select>
           </div>
-
           <div class="admin-actions">
-            <button class="ghost-btn" type="button" onclick="saveCategory(this)">Simpan</button>
-            <button class="danger-btn" type="button" onclick="deleteCategory(this)">Hapus</button>
+            <button class="ghost-btn" onclick="saveCategory(this)">Simpan</button>
+            <button class="danger-btn" onclick="deleteCategory(this)">Hapus</button>
           </div>
         </div>
       `).join("");
     }
 
     async function addCategory() {
-      const status = document.getElementById("categoryStatus");
-      status.textContent = "Menambah kategori...";
-
+      const st = document.getElementById("categoryStatus");
+      st.textContent = "Menambah...";
       try {
-        await api("saveCategory", {
-          token: adminToken,
-          id: "C" + Date.now(),
-          title: "",
-          status: "active",
-          sort: (appData.categories || []).length + 1
-        });
-        status.textContent = "Kategori ditambahkan.";
-        await refreshAdmin();
-      } catch(e) {
-        status.textContent = e.message;
-      }
+        await api("saveCategory", { token: adminToken, id: "C" + Date.now(), title: "", status: "active", sort: (appData.categories||[]).length + 1 });
+        st.textContent = "Berhasil.";
+        await refreshAdminData();
+      } catch(e) { st.textContent = e.message; }
     }
 
-    async function saveCategory(button) {
-      const box = button.closest(".admin-card");
+    async function saveCategory(btn) {
+      const box = btn.closest(".admin-card");
       const payload = { token: adminToken };
-
-      box.querySelectorAll("[data-cat-field]").forEach(input => {
-        payload[input.dataset.catField] = input.value;
-      });
-
+      box.querySelectorAll("[data-cat-field]").forEach(i => payload[i.dataset.catField] = i.value);
       try {
-        const response = await api("saveCategory", payload);
-        document.getElementById("categoryStatus").textContent = response.message || "Kategori disimpan.";
-        await refreshAdmin();
-      } catch (e) {
-        document.getElementById("categoryStatus").textContent = e.message;
-      }
+        const res = await api("saveCategory", payload);
+        document.getElementById("categoryStatus").textContent = res.message;
+        await refreshAdminData();
+      } catch(e) { document.getElementById("categoryStatus").textContent = e.message; }
     }
 
-    async function deleteCategory(button) {
-      if (!confirm("Hapus kategori ini? Semua produk di dalamnya mungkin tidak akan tampil dengan benar.")) return;
-
-      const box = button.closest(".admin-card");
-      const id = box.querySelector("[data-cat-field='id']").value;
-
+    async function deleteCategory(btn) {
+      if(!confirm("Hapus kategori ini?")) return;
       try {
-        const response = await api("deleteCategory", { token: adminToken, id });
-        document.getElementById("categoryStatus").textContent = response.message || "Kategori dihapus.";
-        await refreshAdmin();
-      } catch(e) {
-        document.getElementById("categoryStatus").textContent = e.message;
-      }
+        const id = btn.closest(".admin-card").querySelector("[data-cat-field='id']").value;
+        const res = await api("deleteCategory", { token: adminToken, id });
+        document.getElementById("categoryStatus").textContent = res.message;
+        await refreshAdminData();
+      } catch(e) { document.getElementById("categoryStatus").textContent = e.message; }
     }
 
     function renderAdminProducts() {
-      const container = document.getElementById("adminProducts");
-      const products = appData.products || [];
-      const categories = appData.categories || [];
-
-      container.innerHTML = products.map(product => {
-        const options = categories.map(c => `
-          <option value="${esc(c.id)}" ${product.categoryId === c.id ? "selected" : ""}>${esc(c.title || c.id)}</option>
-        `).join("");
-
-        return `
-          <div class="admin-card">
-            <input type="hidden" data-prod-field="id" value="${esc(product.id)}">
-
-            <div class="grid-2">
-              <div class="field">
-                <label>Kategori</label>
-                <select data-prod-field="categoryId">${options}</select>
-              </div>
-
-              <div class="field">
-                <label>Urutan</label>
-                <input data-prod-field="sort" type="number" value="${esc(product.sort)}">
-              </div>
+      const cats = appData.categories || [];
+      document.getElementById("adminProducts").innerHTML = (appData.products || []).map(prod => `
+        <div class="admin-card">
+          <input type="hidden" data-prod-field="id" value="${esc(prod.id)}">
+          <div class="grid-2">
+            <div class="field"><label>Kategori</label><select data-prod-field="categoryId">
+              ${cats.map(c => `<option value="${esc(c.id)}" ${prod.categoryId === c.id ? "selected" : ""}>${esc(c.title||c.id)}</option>`).join("")}
+            </select></div>
+            <div class="field"><label>Urutan</label><input data-prod-field="sort" type="number" value="${esc(prod.sort)}"></div>
+          </div>
+          <div class="field"><label>Judul</label><input data-prod-field="title" value="${esc(prod.title)}"></div>
+          <div class="field"><label>Deskripsi</label><textarea data-prod-field="description">${esc(prod.description)}</textarea></div>
+          <div class="field"><label>Gambar URL</label><input data-prod-field="image" value="${esc(prod.image)}"></div>
+          <div class="field"><label>Link</label><input data-prod-field="link" value="${esc(prod.link)}"></div>
+          <div class="grid-2">
+            <div class="field"><label>Tombol</label><input data-prod-field="buttonText" value="${esc(prod.buttonText || "Beli")}"></div>
+            <div class="field"><label>Icon (Emoji)</label><input data-prod-field="icon" value="${esc(prod.icon || "✦")}"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Tipe</label>
+              <select data-prod-field="type">
+                <option value="row" ${prod.type === "row" ? "selected" : ""}>Baris</option>
+                <option value="square" ${prod.type === "square" ? "selected" : ""}>Kotak</option>
+              </select>
             </div>
-
-            <div class="field">
-              <label>Judul Produk</label>
-              <input data-prod-field="title" value="${esc(product.title)}">
-            </div>
-
-            <div class="field">
-              <label>Deskripsi</label>
-              <textarea data-prod-field="description">${esc(product.description)}</textarea>
-            </div>
-
-            <div class="field">
-              <label>Gambar URL (Square/Kotak disarankan)</label>
-              <input data-prod-field="image" value="${esc(product.image)}">
-            </div>
-
-            <div class="field">
-              <label>Link Pembelian</label>
-              <input data-prod-field="link" value="${esc(product.link)}">
-            </div>
-
-            <div class="grid-2">
-              <div class="field">
-                <label>Teks Tombol</label>
-                <input data-prod-field="buttonText" value="${esc(product.buttonText || "Beli")}">
-              </div>
-
-              <div class="field">
-                <label>Icon Kotak (Emoji/Text)</label>
-                <input data-prod-field="icon" value="${esc(product.icon || "✦")}">
-              </div>
-            </div>
-
-            <div class="grid-2">
-              <div class="field">
-                <label>Tipe Tampilan</label>
-                <select data-prod-field="type">
-                  <option value="row" ${product.type === "row" ? "selected" : ""}>Baris (Row)</option>
-                  <option value="square" ${product.type === "square" ? "selected" : ""}>Kotak (Grid)</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label>Status</label>
-                <select data-prod-field="status">
-                  <option value="active" ${product.status === "active" ? "selected" : ""}>Tampil</option>
-                  <option value="hidden" ${product.status === "hidden" ? "selected" : ""}>Sembunyikan</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="admin-actions">
-              <button class="ghost-btn" type="button" onclick="saveProduct(this)">Simpan</button>
-              <button class="danger-btn" type="button" onclick="deleteProduct(this)">Hapus</button>
+            <div class="field"><label>Status</label>
+              <select data-prod-field="status">
+                <option value="active" ${prod.status === "active" ? "selected" : ""}>Tampil</option>
+                <option value="hidden" ${prod.status === "hidden" ? "selected" : ""}>Sembunyi</option>
+              </select>
             </div>
           </div>
-        `;
-      }).join("");
+          <div class="admin-actions">
+            <button class="ghost-btn" onclick="saveProduct(this)">Simpan</button>
+            <button class="danger-btn" onclick="deleteProduct(this)">Hapus</button>
+          </div>
+        </div>
+      `).join("");
     }
 
     async function addProduct() {
-      const firstCategory = (appData.categories || [])[0];
-
-      if (!firstCategory) {
-        alert("Buat kategori terlebih dahulu!");
-        return;
-      }
-
-      const status = document.getElementById("productStatus");
-      status.textContent = "Menambah produk...";
-
+      if (!(appData.categories || []).length) return alert("Buat kategori dulu!");
+      const st = document.getElementById("productStatus");
+      st.textContent = "Menambah...";
       try {
-        await api("saveProduct", {
-          token: adminToken,
-          id: "P" + Date.now(),
-          categoryId: firstCategory.id,
-          title: "",
-          description: "",
-          image: "",
-          link: "",
-          buttonText: "Beli",
-          icon: "✦",
-          type: "row",
-          status: "active",
-          sort: (appData.products || []).length + 1
-        });
-
-        status.textContent = "Produk ditambahkan.";
-        await refreshAdmin();
-      } catch(e) {
-        status.textContent = e.message;
-      }
+        await api("saveProduct", { token: adminToken, id: "P" + Date.now(), categoryId: appData.categories[0].id, title: "", description: "", image: "", link: "", buttonText: "Beli", icon: "✦", type: "row", status: "active", sort: (appData.products||[]).length + 1 });
+        st.textContent = "Berhasil.";
+        await refreshAdminData();
+      } catch(e) { st.textContent = e.message; }
     }
 
-    async function saveProduct(button) {
-      const box = button.closest(".admin-card");
+    async function saveProduct(btn) {
+      const box = btn.closest(".admin-card");
       const payload = { token: adminToken };
-
-      box.querySelectorAll("[data-prod-field]").forEach(input => {
-        payload[input.dataset.prodField] = input.value;
-      });
-
+      box.querySelectorAll("[data-prod-field]").forEach(i => payload[i.dataset.prodField] = i.value);
       try {
-        const response = await api("saveProduct", payload);
-        document.getElementById("productStatus").textContent = response.message || "Produk disimpan.";
-        await refreshAdmin();
-      } catch(e) {
-        document.getElementById("productStatus").textContent = e.message;
-      }
+        const res = await api("saveProduct", payload);
+        document.getElementById("productStatus").textContent = res.message;
+        await refreshAdminData();
+      } catch(e) { document.getElementById("productStatus").textContent = e.message; }
     }
 
-    async function deleteProduct(button) {
-      if (!confirm("Hapus produk ini?")) return;
-
-      const box = button.closest(".admin-card");
-      const id = box.querySelector("[data-prod-field='id']").value;
-
+    async function deleteProduct(btn) {
+      if(!confirm("Hapus produk ini?")) return;
       try {
-        const response = await api("deleteProduct", { token: adminToken, id });
-        document.getElementById("productStatus").textContent = response.message || "Produk dihapus.";
-        await refreshAdmin();
-      } catch (e) {
-        document.getElementById("productStatus").textContent = e.message;
-      }
+        const id = btn.closest(".admin-card").querySelector("[data-prod-field='id']").value;
+        const res = await api("deleteProduct", { token: adminToken, id });
+        document.getElementById("productStatus").textContent = res.message;
+        await refreshAdminData();
+      } catch(e) { document.getElementById("productStatus").textContent = e.message; }
     }
 
-    async function refreshAdmin() {
-      try {
-        const response = await api("getData", {
-          admin: "1",
-          token: adminToken
-        });
-
-        if (response.ok) {
-          appData = response.data;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-
-      renderPage();
-      fillAdminProfile();
-      renderAdminCategories();
-      renderAdminProducts();
-    }
-
+    // Hanya load data sekali saat aplikasi pertama kali dibuka
     loadData();
-
-    // Auto-refresh interval (Optional, keeps data fresh)
-    setInterval(() => {
-      if (!document.getElementById("adminModal").classList.contains("active")) {
-        loadData();
-      }
-    }, 30000); // Changed to 30s to be safe with Google Apps Script limit
+    // Catatan: Fungsi setInterval() yang menyebabkan halaman HTML refresh sendiri/berkedip SUDAH DIHAPUS.
   </script>
 </body>
 </html>
